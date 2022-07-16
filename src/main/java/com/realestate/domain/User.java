@@ -60,11 +60,9 @@ public class User {
     )
     private Set<Role> roles=new HashSet<>();
 
-    @OneToMany
-    @JoinColumn(name = "review_id")
+    @OneToMany(mappedBy = "userId")
     private Set<Review> reviews=new HashSet<>();
 
-    @OneToMany
-    @JoinColumn(name = "tour_id")
+    @OneToMany(mappedBy = "userId")
     private Set<TourRequest> tourRequests=new HashSet<>();
 }
