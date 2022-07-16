@@ -24,14 +24,15 @@ public class Image {
     private String id;
 
 
-    //TODO
-    private Long properytId;
-
     private String featured;
 
     @JsonIgnore
     @Lob
     private byte[] data;
+
+    @ManyToOne
+    @JoinColumn(name = "property_id")
+    private Property propertyId;
 
     public Image(String name, String type,byte[] data) {
         this.featured=featured;

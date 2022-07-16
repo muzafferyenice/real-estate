@@ -1,5 +1,6 @@
 package com.realestate.domain;
 
+import com.realestate.domain.enums.ReviewStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,17 +30,17 @@ public class Review {
     @Column(length = 50, nullable = false)
     private int score;
 
-    //TODO
-    @Column(length = 50, nullable = false)
-    private Long propertyId;
-
-    //TODO
-    @Column(length = 50, nullable = false)
-    private Long userId;
-
     @Column(length = 50, nullable = false)
     @Enumerated(EnumType.STRING)
-    private String status;
+    private ReviewStatus status;
 
+
+    @ManyToOne
+    @JoinColumn(name = "property_id")
+    private Property propertyId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User userId;
 
 }

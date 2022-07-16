@@ -35,11 +35,14 @@ public class TourRequest {
     private int child;
 
     @Column(length = 50, nullable = false)
-    private Long userId;
-
-    @Column(length = 50, nullable = false)
     private String status;
 
-    //TODO
-    //propertyId
+
+    @ManyToOne//
+    @JoinColumn(name = "property_id")
+    private Property propertyId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User userId;
 }

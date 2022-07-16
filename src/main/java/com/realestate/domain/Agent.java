@@ -35,8 +35,7 @@ public class Agent {
     private String phoneNumber;
 
 
-    @OneToMany
-    @JoinColumn(name = "agent_id")
+    @OneToMany(mappedBy = "agentId")
     private Set<Property> properties=new HashSet<>();
 
 
