@@ -1,6 +1,8 @@
 package com.realestate.domain;
 
+import com.realestate.domain.enums.Category;
 import com.realestate.domain.enums.PropertyStatus;
+import com.realestate.domain.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,11 +34,11 @@ public class Property {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private String category;
+    private Category category;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 50, nullable = false)
-    private String type;
+    private Type type;
 
     @Column(nullable = false)
     private int bedrooms;
@@ -61,31 +63,31 @@ public class Property {
     private String city;
     @Column(length = 50, nullable = false)
     private String district;
-    @Column(length = 50, nullable = false)
-    private Long agentId;
-    @Column(length = 50, nullable = false)
-    private LocalDateTime createDate;
-    @Column(length = 50, nullable = false)
-    private int likes;
+
 
     @Column(length = 50, nullable = false)
-    private static int visitCount;
+    private LocalDateTime createDate;
+
+    @Column(length = 50, nullable = false)//bunu ayri bir entity yapiniz
+    private Long likes;
+
+    @Column(length = 50, nullable = false)
+    private  Long visitCount;//primitive d t
 
     @Enumerated(EnumType.STRING)
     @Column(length = 50, nullable = false)
     private PropertyStatus status;
 
-    @OneToMany
-    @JoinColumn(name = "tour_id")//iliski kurarkene bu bir container a atmalisin yani Set e
-    //private TourRequest tourId;
+   //JoinColumn one tarafinda kalmayacak many tarafina atilacak table orda olusturulcak
+    @OneToMany(mappedBy = "propertyId")
+    //@JoinColumn(name = "tour_id")//iliski kurarkene bu bir container a atmalisin yani Set e
     private Set<TourRequest> tourRequests=new HashSet<>();
 
-    @OneToMany
-    @JoinColumn(name = "image_id")
+
+    @OneToMany(mappedBy = "propertyId")
     private Set<Image> images=new HashSet<>();
 
-    @OneToMany
-    @JoinColumn(name = "review_id")
+    @OneToMany(mappedBy = "propertyId")
     private Set<Review> reviews=new HashSet<>();
 
     @ManyToMany(fetch=FetchType.EAGER)
@@ -95,5 +97,8 @@ public class Property {
 
     private Set<PropertyDetail> propertyDetail=new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "agent_id")
+    private Agent agentId;
 
 }
