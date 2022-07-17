@@ -1,22 +1,26 @@
 package com.realestate.domain;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.*;
+
 import com.realestate.domain.enums.PropertyStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+
+@Entity
 @Table(name="tbl_property")
 public class Property {
 
@@ -27,7 +31,7 @@ public class Property {
     @Column(length = 50, nullable = false)
     private String title;
 
-    @Column(length = 200, nullable = false)
+    @Column(length = 300, nullable = false)
     private String description;
 
     @Enumerated(EnumType.STRING)
@@ -45,15 +49,17 @@ public class Property {
     private int bathrooms;
 
     @Column(nullable = false)
-    private int garages;
+    private boolean garages;//garages için de int yerine boolean
 
-    @Column(length = 50, nullable = false)
-    private double area;
-    @Column(length = 50, nullable = false)
+    @Column(nullable = false)
+    private double area;//evin metre karesi 
+    
+    @Column(nullable = false)
     private double price;
+    
     @Column(length = 50, nullable = false)
     private String location;
-    @Column(length = 50, nullable = false)
+    @Column(length = 200, nullable = false)
     private String address;
     @Column(length = 50, nullable = false)
     private String country;
@@ -61,14 +67,18 @@ public class Property {
     private String city;
     @Column(length = 50, nullable = false)
     private String district;
+    
     @Column(length = 50, nullable = false)
-    private Long agentId;
-    @Column(length = 50, nullable = false)
+    private String agentId; // String kullanmak daha mantıklı olmazmı
+    
+    @Column(nullable = false)
     private LocalDateTime createDate;
-    @Column(length = 50, nullable = false)
-    private int likes;
+    
+    @Column(nullable = false)
+    private int likes; // like:Kaç begeni aldıgımı
+                       // like: User'en begenip begenmedigimi
 
-    @Column(length = 50, nullable = false)
+    @Column(nullable = false)
     private static int visitCount;
 
     @Enumerated(EnumType.STRING)

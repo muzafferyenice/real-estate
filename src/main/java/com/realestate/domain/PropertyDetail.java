@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name = "tbl_property_detail")
 public class PropertyDetail {
+	
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(length = 50, nullable=false)
     private Long id;
 
     @Column(length = 50, nullable=false)
