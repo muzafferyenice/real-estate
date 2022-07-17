@@ -67,11 +67,12 @@ public class Property {
 
     @Column(length = 50, nullable = false)
     private LocalDateTime createDate;
-    @Column(length = 50, nullable = false)
-    private int likes;
+
+    @Column(length = 50, nullable = false)//bunu ayri bir entity yapiniz
+    private Long likes;
 
     @Column(length = 50, nullable = false)
-    private static int visitCount;
+    private  Long visitCount;//primitive d t
 
     @Enumerated(EnumType.STRING)
     @Column(length = 50, nullable = false)
