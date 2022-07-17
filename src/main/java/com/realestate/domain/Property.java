@@ -1,8 +1,6 @@
 package com.realestate.domain;
 
-import com.realestate.domain.enums.Category;
 import com.realestate.domain.enums.PropertyStatus;
-import com.realestate.domain.enums.Type;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,11 +32,11 @@ public class Property {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private Category category;
+    private String category;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 50, nullable = false)
-    private Type type;
+    private String type;
 
     @Column(nullable = false)
     private int bedrooms;
@@ -63,8 +61,8 @@ public class Property {
     private String city;
     @Column(length = 50, nullable = false)
     private String district;
-
-
+    @Column(length = 50, nullable = false)
+    private Long agentId;
     @Column(length = 50, nullable = false)
     private LocalDateTime createDate;
     @Column(length = 50, nullable = false)
@@ -77,16 +75,17 @@ public class Property {
     @Column(length = 50, nullable = false)
     private PropertyStatus status;
 
-   //JoinColumn one tarafinda kalmayacak many tarafina atilacak table orda olusturulcak
-    @OneToMany(mappedBy = "propertyId")
-    //@JoinColumn(name = "tour_id")//iliski kurarkene bu bir container a atmalisin yani Set e
+    @OneToMany
+    @JoinColumn(name = "tour_id")//iliski kurarkene bu bir container a atmalisin yani Set e
+    //private TourRequest tourId;
     private Set<TourRequest> tourRequests=new HashSet<>();
 
-
-    @OneToMany(mappedBy = "propertyId")
+    @OneToMany
+    @JoinColumn(name = "image_id")
     private Set<Image> images=new HashSet<>();
 
-    @OneToMany(mappedBy = "propertyId")
+    @OneToMany
+    @JoinColumn(name = "review_id")
     private Set<Review> reviews=new HashSet<>();
 
     @ManyToMany(fetch=FetchType.EAGER)
@@ -96,8 +95,5 @@ public class Property {
 
     private Set<PropertyDetail> propertyDetail=new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "agent_id")
-    private Agent agentId;
 
 }
