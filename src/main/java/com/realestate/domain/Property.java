@@ -51,19 +51,24 @@ public class Property {
 
     @Column(length = 50, nullable = false)
     private double area;
+
     @Column(length = 50, nullable = false)
     private double price;
+
     @Column(length = 50, nullable = false)
     private String location;
+
     @Column(length = 50, nullable = false)
     private String address;
+
     @Column(length = 50, nullable = false)
     private String country;
+
     @Column(length = 50, nullable = false)
     private String city;
+
     @Column(length = 50, nullable = false)
     private String district;
-
 
     @Column(length = 50, nullable = false)
     private LocalDateTime createDate;
