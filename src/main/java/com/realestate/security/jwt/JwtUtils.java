@@ -20,20 +20,21 @@ public class JwtUtils {
 
     private static Logger logger=LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("${greenrent.app.jwtSecret}")
-    private String jwtSecret;//TODO
 
-    @Value("${greenrent.app.jwtExpirationMs}")
+    @Value("${realEstate.app.jwtSecret}")//yml ile iliski var burda
+    private String jwtSecret;
+
+    @Value("${realEstate.app.jwtExpirationMs}")
     private long jwtExpirationMs;
 
     public String generateJwtToken(Authentication authentication) {
-        UserDetailsImpl userDetails=   (UserDetailsImpl)  authentication.getPrincipal();
+        UserDetailsImpl userDetails=   (UserDetailsImpl)  authentication.getPrincipal();// currently user in bilgileri alindi
 
         return Jwts.builder()
-                .setSubject(""+(userDetails.getId()))
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime()+jwtExpirationMs))
-                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .setSubject(""+(userDetails.getId()))//id ile user i aldik
+                .setIssuedAt(new Date())// tarih ekledni
+                .setExpiration(new Date(new Date().getTime()+jwtExpirationMs))//time belrlendi yml da
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)//hs512 ile encode edildi
                 .compact();
 
     }

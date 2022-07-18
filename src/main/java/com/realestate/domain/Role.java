@@ -21,7 +21,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    //@Enumerated(EnumType.STRING)//string yazdik ki yazi olarak donsun roletype nini ordinal dersen numarasini yazar
+    @Enumerated(EnumType.STRING)//string yazdik ki yazi olarak donsun roletype nini ordinal dersen numarasini yazar
     @Column(length=20)
     private RoleType name;
 
