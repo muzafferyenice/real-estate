@@ -19,5 +19,8 @@ spring:
     properties:
       '[hibernate.format_sql]': true
 
-
+realEstate:
+  app:
+    jwtSecret: realEstate@34
+    jwtExpirationMs: 86400000
 

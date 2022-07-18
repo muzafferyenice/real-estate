@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-@AllArgsConstructor
+@AllArgsConstructor                     //WebSecurityCustomizer
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {//TODO kemal beye soralim
 
     private UserDetailsService userDetailsService;
@@ -57,4 +57,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {//TODO kema
         return new BCryptPasswordEncoder();
         //sana password verecem sen bunu bcrypt ile encode et
     }
+
 }
