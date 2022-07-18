@@ -25,8 +25,8 @@ public class UserService {
     private RoleRepository roleRepository;
 
     private PasswordEncoder passwordEncoder;
-//TODO
-    //private UserMapper userMapper;//mapper ne yapiyordu
+     //TODO
+    //private UserMapper userMapper;//mapper ne yapiyordu mapstruck doc una bakiniz
 
     public void register(RegisterRequest registerRequest) {
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
@@ -37,9 +37,9 @@ public class UserService {
         Role role = roleRepository.findByName(RoleType.ROLE_CUSTOMER).orElseThrow(() -> new ResourceNotFoundException(
                 String.format(ErrorMessage.ROLE_NOT_FOUND_MESSAGE, RoleType.ROLE_CUSTOMER.name())));
 
-        //TODO
+
         //NEDEN SET E ATADIK
-        Set<Role> roles = new HashSet<>();//SETLERIN unique oldugu icin
+        Set<Role> roles = new HashSet<>(); //SETLERIN unique ozelligi oldugu icin
         roles.add(role);
 
         User user = new User();

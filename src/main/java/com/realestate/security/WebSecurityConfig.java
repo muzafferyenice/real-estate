@@ -20,12 +20,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @AllArgsConstructor                     //WebSecurityCustomizer
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {//TODO kemal beye soralim
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private UserDetailsService userDetailsService;
 
     //TODO  csrf soralim neden disable ediliyor
+    //csrf dis saldirilara karssi koruma sagliyor
+    //disable yapma sebebi token kullandigin icin. token o guvenligi sagladigi icin
     @Override//CORS ayarlari yapilmazsa disardadn api ye baglanmiyoor
+    //corsun da annotu var  and().cors().
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().
                 sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().
