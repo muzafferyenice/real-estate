@@ -33,7 +33,7 @@ public class RegisterRequest {
     private String phoneNumber;
 
     @Email(message = "Please provide valid email")
-    @Size(min = 5, max = 20)
+    @Size(min = 5, max = 200)
     @NotNull(message = "Please provide your email")
     private String email;
 
@@ -44,6 +44,7 @@ public class RegisterRequest {
     @Size(max = 15)
     @NotNull(message = "Please provide your zip code")
     private String zipCode;
+
 
 
 }

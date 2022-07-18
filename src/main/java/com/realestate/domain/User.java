@@ -34,7 +34,7 @@ public class User {
     @Column(length = 50, nullable=false)
     private String lastName;
 
-    @Column(length=20,nullable = false,unique = true)
+    @Column(length=200,nullable = false,unique = true)
     private String email;
 
     @Column(length =120,nullable=false )
@@ -51,7 +51,7 @@ public class User {
     private String zipCode;
 
     @Column(nullable = false)
-    private Boolean builtIn=false;
+    private boolean builtIn=false;
 
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="tbl_user_roles",
