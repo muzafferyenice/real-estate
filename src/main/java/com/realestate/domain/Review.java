@@ -22,13 +22,13 @@ public class Review {
 
     //TODO
     @Column(length = 50, nullable = false)
-    private Long review;
+    private String review;
 
     @Column(length = 50, nullable = false)
     private LocalDateTime createDate=LocalDateTime.now();
 
     @Column(length = 50, nullable = false)
-    private int score;
+    private Integer score;
 
     @Column(length = 50, nullable = false)
     @Enumerated(EnumType.STRING)
