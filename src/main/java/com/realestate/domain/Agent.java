@@ -17,7 +17,6 @@ import java.util.Set;
 @Table(name="tbl_agent")
 public class Agent {
 
-
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;

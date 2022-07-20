@@ -1,29 +1,25 @@
-package com.realestate.dto.request;
+package com.realestate.dto;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
+import com.realestate.domain.Agent;
+import com.realestate.domain.Property;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class AgentRequest {
-
+@NoArgsConstructor
+public class AgentDTO {
 
     @Size(max = 50)
     @NotNull(message = "Please provide your first name")
@@ -45,6 +41,8 @@ public class AgentRequest {
     @Size(min = 5, max = 200)
     @NotNull(message = "Please provide your email")
     private String email;
+
+
 
 
 }
