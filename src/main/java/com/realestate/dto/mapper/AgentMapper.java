@@ -11,4 +11,6 @@ public interface AgentMapper {
 
     Agent agentDTOToAgent(AgentDTO agentDTO);
 
+    AgentDTO agentToAgentDTO(Agent agent);
+
 }
