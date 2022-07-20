@@ -49,10 +49,10 @@ public class Property {
     @Column(nullable = false)
     private int garages;
 
-    @Column(length = 50, nullable = false)
+    @Column(nullable = true)
     private double area;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, nullable = true)
     private double price;
 
     @Column(length = 50, nullable = false)
@@ -70,10 +70,10 @@ public class Property {
     @Column(length = 50, nullable = false)
     private String district;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 50, nullable = true)
     private LocalDateTime createDate;
 
-    @Column(length = 50, nullable = false)//bunu ayri bir entity yapiniz
+    @Column(length = 50, nullable = true)//bunu ayri bir entity yapiniz
     private Long likes;
 
     @Column(length = 50, nullable = false)
@@ -102,8 +102,10 @@ public class Property {
 
     private Set<PropertyDetail> propertyDetail=new HashSet<>();
 
+   
     @ManyToOne
     @JoinColumn(name = "agent_id")
     private Agent agentId;
+    
 
 }

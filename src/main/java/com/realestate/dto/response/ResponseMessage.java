@@ -12,7 +12,7 @@ public class ResponseMessage {
 	public final static String CAR_UPDATE_RESPONSE_MESSAGE="Car Updated Successfully";
 	public final static String CAR_DELETE_RESPONSE_MESSAGE="Car Deleted Successfully";
 	
-	public final static String RESERVATION_SAVED_RESPONSE_MESSAGE="Reservation Saved Successfully";
+	public final static String REVIEW_SAVED_RESPONSE_MESSAGE="Review Saved Successfully";
 	public final static String RESERVATION_UPDATE_RESPONSE_MESSAGE="Reservation Updated Successfully";
 	public final static String RESERVATION_DELETED_RESPONSE_MESSAGE="Reservation Deleted Successfully";
 	
