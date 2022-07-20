@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface AgentRepository extends JpaRepository<Agent,Long> {
-    Optional<Agent> findByEmail(String email);//nullpointexception dan kurtulmak icin Optional yaptik
+   // Optional<Agent> findByEmail(String email);//nullpointexception dan kurtulmak icin Optional yaptik
 
     Boolean existsByEmail(String email);
 

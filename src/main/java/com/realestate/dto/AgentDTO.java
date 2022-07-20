@@ -21,6 +21,8 @@ import java.util.Set;
 @NoArgsConstructor
 public class AgentDTO {
 
+    private Long id;
+
     @Size(max = 50)
     @NotNull(message = "Please provide your first name")
     private String firstName;

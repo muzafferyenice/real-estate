@@ -26,8 +26,7 @@ public class AgentController {
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<RealEstateResponse> createAgent(HttpServletRequest request,
-                                                          //@RequestParam(value="propertId")
-                                                          Long propertyId,
+                                                          @RequestParam(value="propertId")Long propertyId,
                                                           @Valid @RequestBody AgentDTO agentDTO){
 
         Long userId = (Long) request.getAttribute("id");//buranin aciklamasi usercontroller da
