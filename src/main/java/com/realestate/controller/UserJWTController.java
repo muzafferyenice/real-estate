@@ -4,8 +4,8 @@ import javax.validation.Valid;
 
 import com.realestate.dto.request.LoginRequest;
 import com.realestate.dto.request.RegisterRequest;
-import com.realestate.dto.response.GRResponse;
 import com.realestate.dto.response.LoginResponse;
+import com.realestate.dto.response.RealEstateResponse;
 import com.realestate.dto.response.ResponseMessage;
 import com.realestate.security.jwt.JwtUtils;
 import com.realestate.service.UserService;
@@ -36,10 +36,10 @@ private UserService userService;
 	private JwtUtils jwtUtils;
 
 	@PostMapping("/register")
-	public ResponseEntity<GRResponse> register(@Valid @RequestBody RegisterRequest registerRequest){
+	public ResponseEntity<RealEstateResponse> register(@Valid @RequestBody RegisterRequest registerRequest){
 		userService.register(registerRequest);
 		
-		GRResponse response=new GRResponse();
+		RealEstateResponse response=new RealEstateResponse();
 		response.setMessage(ResponseMessage.REGISTER_RESPONSE_MESSAGE);
 		response.setSuccess(true);
 		

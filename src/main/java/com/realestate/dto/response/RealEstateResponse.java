@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GRResponse {
+public class RealEstateResponse {
     boolean success;
     String message;
 }
