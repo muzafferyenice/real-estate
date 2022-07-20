@@ -66,10 +66,10 @@ public class UserService {
     }
 
     public UserDTO findById(Long id) {//user i dto ya cevirmelisin
-      User user=  userRepository.findById(id).orElseThrow(() ->
+        User user = userRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, id)));
 
-return userMapper.userToUserDTO(user);
+        return userMapper.userToUserDTO(user);
     }
 
 
