@@ -1,5 +1,6 @@
 package com.realestate.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.realestate.domain.enums.Category;
 import com.realestate.domain.enums.PropertyStatus;
 import com.realestate.domain.enums.Type;
@@ -70,8 +71,10 @@ public class Property {
     @Column(length = 50, nullable = false)
     private String district;
 
-    @Column(length = 50, nullable = true)
-    private LocalDateTime createDate;
+
+    @Column(length = 50, nullable = false)
+    private LocalDateTime createDate = LocalDateTime.now();
+
 
     @Column(length = 50, nullable = true)//bunu ayri bir entity yapiniz
     private Long likes;

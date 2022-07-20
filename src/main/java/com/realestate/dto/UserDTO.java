@@ -14,7 +14,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class UserDTO {//datalogic ile ilgili hicbirsey burda olmamali
 
     private Long id;
 
@@ -39,10 +39,10 @@ public class UserDTO {
 
         roles.forEach(r -> {
             if (r.getName().equals(RoleType.ROLE_ADMIN))
-                rolesStr.add("Administrator");
+                rolesStr.add("Administrator reis yaa");
             else
                 rolesStr.add("Customer");
-        });
+        });//cool lambda syntax
 
         this.roles=rolesStr;
     }
