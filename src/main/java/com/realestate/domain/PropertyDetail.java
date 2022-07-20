@@ -1,5 +1,6 @@
 package com.realestate.domain;
 
+import com.realestate.domain.enums.PropertyDetails;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,8 @@ public class PropertyDetail {
     private Long id;
 
     @Column(length = 50, nullable=false)
-    private String   title;
+    @Enumerated(EnumType.STRING)
+    private PropertyDetails title;
 
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="tbl_property_propdetails",
