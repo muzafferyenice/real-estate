@@ -51,7 +51,7 @@ public class User {
     private String zipCode;
 
     @Column(nullable = false)
-    private Boolean builtIn=false;
+    private boolean builtIn=false;
 
     @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="tbl_user_roles",

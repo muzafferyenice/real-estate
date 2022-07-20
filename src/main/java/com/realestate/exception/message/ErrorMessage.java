@@ -2,7 +2,7 @@ package com.realestate.exception.message;
 
 public class ErrorMessage {
 
-public final static String RESOURCE_NOT_FOUND_MESSAGE="Resource with id %d not found";
+   public final static String RESOURCE_NOT_FOUND_MESSAGE="Resource with id %d not found";
 	
 	public final static String USER_NOT_FOUND_MESSAGE="User with email %s not found";
 	
@@ -19,6 +19,10 @@ public final static String RESOURCE_NOT_FOUND_MESSAGE="Resource with id %d not f
 	public final static String RESERVATION_TIME_INCORRECT_MESSAGE="Reservation pick up time or drop off time not correct";
 
 	public final static String CAR_NOT_AVAILABLE_MESSAGE=".Car is not available for selected time";
-	
+
+	public final static String AGENT_NOT_AVAILABLE_MESSAGE=".Agent is not available ";
+
+	public final static String AGENT_ALREADY_EXIST="Agent already exist :%d ";
+
 	
 }
