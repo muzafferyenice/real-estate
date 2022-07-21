@@ -12,6 +12,8 @@ import com.realestate.domain.Property;
 import com.realestate.domain.Review;
 import com.realestate.domain.User;
 import com.realestate.domain.enums.ReviewStatus;
+import com.realestate.dto.ReviewDTO;
+import com.realestate.dto.mapper.ReviewMapper;
 import com.realestate.dto.request.ReviewRequest;
 import com.realestate.repository.PropertyRepository;
 import com.realestate.repository.ReviewRepository;
@@ -26,8 +28,9 @@ public class ReviewService {
 	private ReviewRepository reviewRepository;
 	private UserRepository userRepository;
 	private PropertyRepository propertyRepository;
+	private ReviewMapper reviewMapper;
 	
-	public void createReview(Long userId, @Valid ReviewRequest reviewRequest, Long propertyId) {
+	public void createReview(Long userId, @Valid ReviewDTO reviewDTO, Long propertyId) {
 		User user = userRepository.findById(userId).orElseThrow(()->new 
 				ResourceNotFoundException(String.format(ErrorMessage.REVIEW_NOT_FOUND_MESSAGE, userId)));
 		
@@ -35,10 +38,9 @@ public class ReviewService {
          new ResourceNotFoundException(String.format(ErrorMessage.REVIEW_NOT_FOUND_MESSAGE, propertyId)));
 		
 		
-		Review review = new Review();
+		Review review = reviewMapper.ReviewDTOToReview(reviewDTO);
 		review.setPropertyId(property);
-		review.setReview(reviewRequest.getReview());
-		review.setScore(reviewRequest.getScore());
+	
 		review.setCreateDate(LocalDateTime.now());
 		review.setStatus(ReviewStatus.PENDING);
 		review.setUserId(user);
@@ -57,11 +59,12 @@ public class ReviewService {
 		
 	}
 
-	public Review getReview(Long id) {
+	public ReviewDTO getReview(Long id) {
 		Review review = reviewRepository.findById(id).orElseThrow(()-> new 
 				ResourceNotFoundException(String.format(ErrorMessage.REVIEW_NOT_FOUND_MESSAGE, id)));
 		
-		return review;
+		ReviewDTO reviewDTO = reviewMapper.ReviewToReviewDTO(review);
+		return reviewDTO;
 	}
 
 }

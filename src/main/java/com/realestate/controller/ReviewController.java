@@ -19,6 +19,7 @@ import com.realestate.dto.response.ResponseMessage;
 import com.realestate.service.ReviewService;
 import com.realestate.domain.Property;
 import com.realestate.domain.Review;
+import com.realestate.dto.ReviewDTO;
 import com.realestate.dto.request.ReviewRequest;
 import com.realestate.dto.response.RealEstateResponse;
 
@@ -33,10 +34,12 @@ public class ReviewController {
 
 	@PostMapping("/add/{propertyId}")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
-	public ResponseEntity<RealEstateResponse> addReview(HttpServletRequest request, @Valid @RequestBody ReviewRequest reviewRequest, @PathVariable Long propertyId ) {
+	public ResponseEntity<RealEstateResponse> addReview(HttpServletRequest request, @Valid @RequestBody ReviewDTO reviewDTO, @PathVariable Long propertyId ) {
+		
+		
 		Long userId= (Long) request.getAttribute("id");
 		
-		reviewService.createReview(userId, reviewRequest, propertyId);
+		reviewService.createReview(userId, reviewDTO, propertyId);
 		
 		
 		RealEstateResponse response=new RealEstateResponse();
@@ -63,10 +66,11 @@ public class ReviewController {
 	
 	@GetMapping("/{id}")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
-	public ResponseEntity<Review> getReview(Long id){
-		Review review = reviewService.getReview(id);
+	public ResponseEntity<ReviewDTO> getReview(Long id){
+		ReviewDTO reviewDTO = reviewService.getReview(id);
 		
-		return ResponseEntity.ok(review);
+		
+		return ResponseEntity.ok(reviewDTO);
 	}
 	
 

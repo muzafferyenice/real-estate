@@ -14,16 +14,11 @@ import lombok.Setter;
 
 public class ReviewDTO {
 
-    private Long id;
-
-   
+ 
     private String review;
 
 
     private Integer score;
-
-
-
 
 
 
