@@ -44,8 +44,9 @@ public class PropertyServiceImpl implements IPropertyService {
         property.getPropertyDetail().add(propertyDetail);
 
         property.setAgentId(agent);
-
         property.setStatus(PropertyStatus.ACTIVE);
+        property.setLikes(0L);
+        property.setVisitCount(0L);
 
         propertyRepository.save(property);
 

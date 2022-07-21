@@ -29,10 +29,10 @@ public class ReviewService {
 	
 	public void createReview(Long userId, @Valid ReviewRequest reviewRequest, Long propertyId) {
 		User user = userRepository.findById(userId).orElseThrow(()->new 
-				ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, userId)));
+				ResourceNotFoundException(String.format(ErrorMessage.REVIEW_NOT_FOUND_MESSAGE, userId)));
 		
 		 Property property= propertyRepository.findById(propertyId).orElseThrow(()->
-         new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
+         new ResourceNotFoundException(String.format(ErrorMessage.REVIEW_NOT_FOUND_MESSAGE, propertyId)));
 		
 		
 		Review review = new Review();
@@ -46,6 +46,22 @@ public class ReviewService {
 		reviewRepository.save(review);
 		
 		
+	}
+
+	public void deleteReview(Long id) {
+		
+		Review review = reviewRepository.findById(id).orElseThrow(()-> new 
+				ResourceNotFoundException(String.format(ErrorMessage.REVIEW_NOT_FOUND_MESSAGE, id)));
+		
+		reviewRepository.delete(review);
+		
+	}
+
+	public Review getReview(Long id) {
+		Review review = reviewRepository.findById(id).orElseThrow(()-> new 
+				ResourceNotFoundException(String.format(ErrorMessage.REVIEW_NOT_FOUND_MESSAGE, id)));
+		
+		return review;
 	}
 
 }
