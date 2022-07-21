@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface IPropertyService {
 
-    void createProperty(PropertyDTO propertyDTO,Long agentId,Long detailId);
+    void createProperty(PropertyDTO propertyDTO,Long agentId,Long propertyId);
 
-    void updateProperty(PropertyDTO propertyDTO,Long agentId,Long detailId);
+    void updateProperty(PropertyDTO propertyDTO,Long agentId,Long propertyDetailId);
 
     void deleteProperty(Long propertyId);
 

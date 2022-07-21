@@ -81,8 +81,8 @@ public class Property {
     private  long visitCount;//primitive d t
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 50, nullable = false)
-    private PropertyStatus status;
+    @Column(length = 50)
+    private PropertyStatus status=PropertyStatus.ACTIVE;
 
    //JoinColumn one tarafinda kalmayacak many tarafina atilacak table orda olusturulcak
     @OneToMany(mappedBy = "propertyId")

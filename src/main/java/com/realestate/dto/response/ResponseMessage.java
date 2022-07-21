@@ -10,7 +10,8 @@ public class ResponseMessage {
 	
 	public final static String AGENT_SAVED_RESPONSE_MESSAGE="Agent Saved Successfully";
 	public final static String PROPERTY_CREATED_RESPONSE_MESSAGE="Property created Successfully";
-	public final static String CAR_UPDATE_RESPONSE_MESSAGE="Car Updated Successfully";
+	public final static String PROPERTY_DELETED_RESPONSE_MESSAGE="Property deleted Successfully";
+	public final static String PROPERTY_UPDATE_RESPONSE_MESSAGE="Property Updated Successfully";
 	public final static String CAR_DELETE_RESPONSE_MESSAGE="Car Deleted Successfully";
 	
 	public final static String RESERVATION_SAVED_RESPONSE_MESSAGE="Reservation Saved Successfully";

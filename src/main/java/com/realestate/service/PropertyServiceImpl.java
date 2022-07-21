@@ -32,34 +32,46 @@ public class PropertyServiceImpl implements IPropertyService {
 
     @Override
     @Transactional
-    public void createProperty(PropertyDTO propertyDTO, Long agentId, Long detailId) {
+    public void createProperty(PropertyDTO propertyDTO, Long agentId, Long propertyDetailId) {
         Agent agent = agentRepository.findById(agentId).orElseThrow(() ->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, agentId)));
 
-        PropertyDetail propertyDetail = propertyDetailRepository.findById(detailId).orElseThrow(() ->
-                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, detailId)));
+        PropertyDetail propertyDetail = propertyDetailRepository.findById(propertyDetailId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyDetailId)));
 
         Property property = propertyMapper.propertyDTOToProperty(propertyDTO);
 
-        property.getPropertyDetail().add(propertyDetail);
-
         property.setAgentId(agent);
-
-
-        property.setStatus(PropertyStatus.ACTIVE);
 
         propertyRepository.save(property);
 
 
     }
 
+    // TODO: Düsün status
     @Override
-    public void updateProperty(PropertyDTO propertyDTO, Long agentId, Long detailId) {
+    public void updateProperty(PropertyDTO propertyDTO, Long agentId, Long propertyId) {
+        Agent agent = agentRepository.findById(agentId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, agentId)));
+
+
+        Property findProperty = propertyRepository.findById(propertyId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
+
+        Property property = propertyMapper.propertyDTOToProperty(propertyDTO);
+
+        property.setId(findProperty.getId());
+        property.setAgentId(agent);
+        propertyRepository.save(property);
 
     }
 
     @Override
     public void deleteProperty(Long propertyId) {
+        Property property=propertyRepository.findById(propertyId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
+
+        propertyRepository.delete(property);
 
     }
 
@@ -77,7 +89,9 @@ public class PropertyServiceImpl implements IPropertyService {
     public PropertyDTO getReview(Long id) {
         Property property=propertyRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, id)));
+
         property.setVisitCount(property.getVisitCount()+1);
+
         propertyRepository.save(property);
       return  propertyMapper.propertyToPropertyDTO(property);
     }
