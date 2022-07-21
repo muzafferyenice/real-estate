@@ -19,6 +19,5 @@ public interface IPropertyService {
     List<PropertyDTO> getAllProperty();
 
 
-
-
+    PropertyDTO getReview(Long id);
 }

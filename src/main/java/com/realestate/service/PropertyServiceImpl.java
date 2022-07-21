@@ -45,6 +45,7 @@ public class PropertyServiceImpl implements IPropertyService {
 
         property.setAgentId(agent);
 
+
         property.setStatus(PropertyStatus.ACTIVE);
 
         propertyRepository.save(property);
@@ -70,5 +71,14 @@ public class PropertyServiceImpl implements IPropertyService {
     @Override
     public List<PropertyDTO> getAllProperty() {
         return null;
+    }
+
+    @Override
+    public PropertyDTO getReview(Long id) {
+        Property property=propertyRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, id)));
+        property.setVisitCount(property.getVisitCount()+1);
+        propertyRepository.save(property);
+      return  propertyMapper.propertyToPropertyDTO(property);
     }
 }

@@ -2,6 +2,7 @@ package com.realestate.controller;
 
 
 import com.realestate.dto.PropertyDTO;
+import com.realestate.dto.ReviewDTO;
 import com.realestate.dto.response.RealEstateResponse;
 import com.realestate.dto.response.ResponseMessage;
 import com.realestate.service.PropertyServiceImpl;
@@ -34,6 +35,15 @@ public class PropertyControlller {
         response.setSuccess(true);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('CUSTOMER') or hasRole('ADMIN')")
+    public ResponseEntity<PropertyDTO> getReview(@PathVariable("id") Long id) {
+
+        PropertyDTO propertyDTO=  propertyServiceImpl.getReview(id);
+
+        return ResponseEntity.ok(propertyDTO);
     }
 
 

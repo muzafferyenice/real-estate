@@ -37,7 +37,7 @@ public class UserService {
         }
         String encodedPassword = passwordEncoder.encode(registerRequest.getPassword());
 
-        Role role = roleRepository.findByName(RoleType.ROLE_ADMIN).orElseThrow(() -> new ResourceNotFoundException(
+        Role role = roleRepository.findByName(RoleType.ROLE_CUSTOMER).orElseThrow(() -> new ResourceNotFoundException(
                 String.format(ErrorMessage.ROLE_NOT_FOUND_MESSAGE, RoleType.ROLE_CUSTOMER.name())));
 
 

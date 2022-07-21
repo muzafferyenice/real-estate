@@ -74,11 +74,11 @@ public class Property {
     @Column(length = 50, nullable = false)
     private LocalDateTime createDate = LocalDateTime.now();
 
-    @Column(length = 50, nullable = false)//bunu ayri bir entity yapiniz
-    private Long likes;
+    @Column(length = 50)//bunu ayri bir entity yapiniz
+    private long likes;
 
-    @Column(length = 50, nullable = false)
-    private  Long visitCount;//primitive d t
+    @Column(length = 50)
+    private  long visitCount;//primitive d t
 
     @Enumerated(EnumType.STRING)
     @Column(length = 50, nullable = false)

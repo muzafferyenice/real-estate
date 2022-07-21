@@ -46,7 +46,9 @@ public class PropertyDTO {
 
         private String district;
 
+        private long likes;
 
+        private  long visitCount;
 
 
 
