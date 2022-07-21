@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import java.time.LocalDateTime;
 
 @Getter
@@ -18,36 +21,53 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PropertyDTO {
 
-        private String title;
+	@Size(max = 30)
+	@NotNull(message = "Please provide title")
+	private String title;
 
-        private String description;
+	@Size(max = 200)
+	@NotNull(message = "Please provide description")
+	private String description;
 
-        private Category category;
+	@NotNull
+	private Category category;
 
-        private Type type;
+	@NotNull
+	private Type type;
 
-        private int bedrooms;
+	@NotNull
+	private int bedrooms;
 
-        private int bathrooms;
+	@NotNull
+	private int bathrooms;
 
-        private int garages;
+	@NotNull
+	private int garages;
 
-        private double area;
+	@NotNull
+	private double area;
 
-        private double price;
+	@NotNull
+	private double price;
 
-        private String location;
+	@Size(max = 30)
+	@NotNull(message = "Please provide location")
+	private String location;
+	
+	@Size(max = 100)
+	@NotNull(message = "Please provide address")
+	private String address;
 
-        private String address;
+	@Size(max = 30)
+	@NotNull(message = "Please provide country")
+	private String country;
 
-        private String country;
+	@Size(max = 30)
+	@NotNull(message = "Please provide city")
+	private String city;
 
-        private String city;
-
-        private String district;
-
-
-
-
+	@Size(max = 30)
+	@NotNull(message = "Please provide district")
+	private String district;
 
 }
