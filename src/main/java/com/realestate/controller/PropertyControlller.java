@@ -23,11 +23,11 @@ public class PropertyControlller {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<RealEstateResponse> createProperty(@RequestParam(value="propertyId") Long propertyId,
+    public ResponseEntity<RealEstateResponse> createProperty(@RequestParam(value="propertyDetailId") Long propertyDetailId,
                                                              @RequestParam(value="agentId") Long agentId,
                                                              @Valid @RequestBody PropertyDTO propertyDTO){
 
-        propertyServiceImpl.createProperty(propertyDTO, agentId, propertyId);
+        propertyServiceImpl.createProperty(propertyDTO, agentId, propertyDetailId);
 
         RealEstateResponse response=new RealEstateResponse();
         response.setMessage(ResponseMessage.PROPERTY_CREATED_RESPONSE_MESSAGE);

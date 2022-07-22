@@ -30,31 +30,24 @@ public class AgentServiceImpl implements IAgent {
 
     private AgentMapper agentMapper;
 
+    //TODO bu property nin baska bir agent ta olup olmadigini kontrol eden method yaz
+    //boolean propertyStatus=checkPropertyAvailability(propertyId)
+       /*
 
-    @Override
-    public void createAgent(AgentDTO agentDTO, Long userId, Long propertyId) {
-        Property property = propertyRepository.findById(propertyId).orElseThrow(() ->
-                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
-
-        //TODO bu property nin baska bir agent ta olup olmadigini kontrol eden method yaz
-        //boolean propertyStatus=checkPropertyAvailability(propertyId)
-
-       User user= userRepository.findById(userId).orElseThrow(() ->
-                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, userId)));
-
-        Agent agent = agentMapper.agentDTOToAgent(agentDTO);//mapping done convert dto into entity
-/*
         if (!propertyStatus){
             agent.setStatus()
         }
 */
-       /* agent.setFirstName(agentRequest.getFirstName()); MAPPER BUNLARDAN KURTARIYOR
-        agent.setLastName(agentRequest.getLastName());
-        agent.setEmail(agentRequest.getEmail());
-        agent.setPhoneNumber(agentRequest.getPhoneNumber());
-      */
-        agentRepository.save(agent);
+    @Override
+    public void createAgent(AgentDTO agentDTO, Long agentId, Long propertyId) {
+        Property property = propertyRepository.findById(propertyId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
 
+        Agent agent = agentMapper.agentDTOToAgent(agentDTO);//mapping done convert dto into entity
+
+        property.setAgentId(agent);
+
+        agentRepository.save(agent);
     }
 
     @Override

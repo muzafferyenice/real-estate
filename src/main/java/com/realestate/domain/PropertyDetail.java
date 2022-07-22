@@ -26,11 +26,5 @@ public class PropertyDetail {
     @Enumerated(EnumType.STRING)
     private PropertyDetails title;
 
-    @ManyToMany(fetch=FetchType.EAGER)
-    @JoinTable(name="tbl_property_propdetails",
-            joinColumns =  @JoinColumn(name = "propertyDetail_id"),
-            inverseJoinColumns = @JoinColumn(name="property_id"))
-
-    private Set<Property> properties=new HashSet<>();
 
 }

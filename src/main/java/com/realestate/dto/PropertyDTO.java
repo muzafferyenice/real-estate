@@ -1,6 +1,7 @@
 package com.realestate.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.realestate.domain.Property;
 import com.realestate.domain.enums.Category;
 import com.realestate.domain.enums.PropertyStatus;
 import com.realestate.domain.enums.Type;
@@ -11,12 +12,15 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class PropertyDTO {
+
+       // private Long id;
 
         private String title;
 
@@ -46,8 +50,6 @@ public class PropertyDTO {
 
         private String district;
 
-
-
-
+       //private Set<String> image;
 
 }

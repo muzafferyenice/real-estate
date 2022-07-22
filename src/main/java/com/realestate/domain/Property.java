@@ -75,18 +75,18 @@ public class Property {
     private LocalDateTime createDate = LocalDateTime.now();
 
     @Column(length = 50, nullable = false)//bunu ayri bir entity yapiniz
-    private Long likes;
+    private long likes;
 
     @Column(length = 50, nullable = false)
-    private  Long visitCount;//primitive d t
+    private  long visitCount;//primitive d t
 
     @Enumerated(EnumType.STRING)
     @Column(length = 50, nullable = false)
     private PropertyStatus status;
 
    //JoinColumn one tarafinda kalmayacak many tarafina atilacak table orda olusturulcak
+   //@JoinColumn(name = "tour_id")//iliski kurarkene bu bir container a atmalisin yani Set e
     @OneToMany(mappedBy = "propertyId")
-    //@JoinColumn(name = "tour_id")//iliski kurarkene bu bir container a atmalisin yani Set e
     private Set<TourRequest> tourRequests=new HashSet<>();
 
 
@@ -96,7 +96,7 @@ public class Property {
     @OneToMany(mappedBy = "propertyId")
     private Set<Review> reviews=new HashSet<>();
 
-    @ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name="tbl_property_propdetails",
             joinColumns =  @JoinColumn(name = "propertyDetail_id"),
             inverseJoinColumns = @JoinColumn(name="property_id"))
