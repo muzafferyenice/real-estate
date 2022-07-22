@@ -3,8 +3,9 @@ package com.realestate.service;
 import com.realestate.domain.Agent;
 import com.realestate.domain.Property;
 import com.realestate.domain.PropertyDetail;
-import com.realestate.domain.enums.PropertyStatus;
+
 import com.realestate.dto.PropertyDTO;
+import com.realestate.dto.mapper.AgentMapper;
 import com.realestate.dto.mapper.PropertyMapper;
 import com.realestate.exception.ResourceNotFoundException;
 import com.realestate.exception.message.ErrorMessage;
@@ -13,7 +14,7 @@ import com.realestate.repository.PropertyDetailRepository;
 import com.realestate.repository.PropertyRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 
@@ -30,14 +31,14 @@ public class PropertyServiceImpl implements IPropertyService {
     private PropertyMapper propertyMapper;
 
 
+
     @Override
-    @Transactional
-    public void createProperty(PropertyDTO propertyDTO, Long agentId, Long detailId) {
+    public void createProperty(PropertyDTO propertyDTO, Long agentId, Long propertyDetailId) {
         Agent agent = agentRepository.findById(agentId).orElseThrow(() ->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, agentId)));
 
-        PropertyDetail propertyDetail = propertyDetailRepository.findById(detailId).orElseThrow(() ->
-                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, detailId)));
+        PropertyDetail propertyDetail = propertyDetailRepository.findById(propertyDetailId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyDetailId)));
 
         Property property = propertyMapper.propertyDTOToProperty(propertyDTO);
 
@@ -45,7 +46,7 @@ public class PropertyServiceImpl implements IPropertyService {
 
         property.setAgentId(agent);
 
-        property.setStatus(PropertyStatus.ACTIVE);
+        //property.setStatus(PropertyStatus.ACTIVE);
 
         propertyRepository.save(property);
 
@@ -53,12 +54,29 @@ public class PropertyServiceImpl implements IPropertyService {
     }
 
     @Override
-    public void updateProperty(PropertyDTO propertyDTO, Long agentId, Long detailId) {
+    public void updateProperty(PropertyDTO propertyDTO, Long agentId, Long propertyId) {
+        Agent agent = agentRepository.findById(agentId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, agentId)));
+
+
+        Property foundProperty = propertyRepository.findById(propertyId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
+
+        Property property = propertyMapper.propertyDTOToProperty(propertyDTO);
+
+
+        property.setId(foundProperty.getId());
+        property.setAgentId(agent);
+        propertyRepository.save(property);
 
     }
 
     @Override
     public void deleteProperty(Long propertyId) {
+        Property property=propertyRepository.findById(propertyId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
+
+        propertyRepository.delete(property);
 
     }
 
@@ -70,5 +88,16 @@ public class PropertyServiceImpl implements IPropertyService {
     @Override
     public List<PropertyDTO> getAllProperty() {
         return null;
+    }
+
+    @Override
+    public PropertyDTO getReview(Long id) {
+        Property property=propertyRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, id)));
+
+        property.setVisitCount(property.getVisitCount()+1);
+
+        propertyRepository.save(property);
+        return  propertyMapper.propertyToPropertyDTO(property);
     }
 }

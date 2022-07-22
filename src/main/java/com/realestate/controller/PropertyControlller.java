@@ -35,6 +35,42 @@ public class PropertyControlller {
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+    @GetMapping("/{id}")
+    @PreAuthorize("hasRole('CUSTOMER') or hasRole('ADMIN')")
+    public ResponseEntity<PropertyDTO> getReview(@PathVariable("id") Long id) {
+
+        PropertyDTO propertyDTO = propertyServiceImpl.getReview(id);
+
+        return ResponseEntity.ok(propertyDTO);
+    }
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<RealEstateResponse> deleteProperty(@PathVariable("id") Long id) {
+
+        propertyServiceImpl.deleteProperty(id);
+
+        RealEstateResponse response = new RealEstateResponse();
+        response.setMessage(ResponseMessage.PROPERTY_DELETED_RESPONSE_MESSAGE);
+        response.setSuccess(true);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @PutMapping("/update")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<RealEstateResponse> updateProperty(@RequestParam(value="propertyId") Long propertyId,
+                                                             @RequestParam(value="agentId") Long agentId,
+                                                             @Valid @RequestBody PropertyDTO propertyDTO){
+
+        propertyServiceImpl.updateProperty(propertyDTO,agentId,propertyId);
+
+        RealEstateResponse response=new RealEstateResponse();
+        response.setMessage(ResponseMessage.PROPERTY_UPDATE_RESPONSE_MESSAGE);
+        response.setSuccess(true);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+    }
+
 
 
 }
