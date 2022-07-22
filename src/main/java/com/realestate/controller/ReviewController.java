@@ -1,5 +1,7 @@
 package com.realestate.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -66,11 +68,19 @@ public class ReviewController {
 	
 	@GetMapping("/{id}")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
-	public ResponseEntity<ReviewDTO> getReview(Long id){
+	public ResponseEntity<ReviewDTO> getReview(@PathVariable Long id){
 		ReviewDTO reviewDTO = reviewService.getReview(id);
 		
 		
 		return ResponseEntity.ok(reviewDTO);
+	}
+	
+	@GetMapping("/{id}")
+	@PreAuthorize("hasRole('CUSTOMER')")
+	public ResponseEntity<List<Review>> getReviews(@PathVariable Long propertyId){
+		
+		List<Review> reviews=reviewService.getReviews(propertyId);
+		return ResponseEntity.ok(reviews);
 	}
 	
 

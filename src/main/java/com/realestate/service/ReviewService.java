@@ -1,6 +1,7 @@
 package com.realestate.service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -34,13 +35,13 @@ public class ReviewService {
 		User user = userRepository.findById(userId).orElseThrow(()->new 
 				ResourceNotFoundException(String.format(ErrorMessage.REVIEW_NOT_FOUND_MESSAGE, userId)));
 		
-		 Property property= propertyRepository.findById(propertyId).orElseThrow(()->
+		Property property= propertyRepository.findById(propertyId).orElseThrow(()->
          new ResourceNotFoundException(String.format(ErrorMessage.REVIEW_NOT_FOUND_MESSAGE, propertyId)));
 		
 		
 		Review review = reviewMapper.ReviewDTOToReview(reviewDTO);
-		review.setPropertyId(property);
-	
+		
+		review.setPropertyId(property);	
 		review.setCreateDate(LocalDateTime.now());
 		review.setStatus(ReviewStatus.PENDING);
 		review.setUserId(user);
@@ -65,6 +66,13 @@ public class ReviewService {
 		
 		ReviewDTO reviewDTO = reviewMapper.ReviewToReviewDTO(review);
 		return reviewDTO;
+	}
+
+	public List<Review> getReviews(Long propertyId) {
+		
+		Property property = propertyRepository.findById(propertyId).orElseThrow(()-> new 
+				ResourceNotFoundException(String.format(ErrorMessage.REVIEW_NOT_FOUND_MESSAGE, propertyId)));
+		return null;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.realestate.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.realestate.domain.Image;
 import com.realestate.domain.enums.Category;
 import com.realestate.domain.enums.PropertyStatus;
 import com.realestate.domain.enums.Type;
@@ -46,7 +47,11 @@ public class PropertyDTO {
 
         private String district;
 
-
+        private String status;
+        
+       
+        
+      
 
 
 
