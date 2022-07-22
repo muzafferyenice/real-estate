@@ -25,7 +25,7 @@ public class Review {
     private Long review;
 
     @Column(length = 50, nullable = false)
-    private LocalDateTime createDate;
+    private LocalDateTime createDate=LocalDateTime.now();
 
     @Column(length = 50, nullable = false)
     private int score;

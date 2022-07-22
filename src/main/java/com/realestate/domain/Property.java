@@ -81,8 +81,8 @@ public class Property {
     private  long visitCount;//primitive d t
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 50, nullable = false)
-    private PropertyStatus status;
+    @Column(length = 50)
+    private PropertyStatus status=PropertyStatus.ACTIVE;
 
    //JoinColumn one tarafinda kalmayacak many tarafina atilacak table orda olusturulcak
    //@JoinColumn(name = "tour_id")//iliski kurarkene bu bir container a atmalisin yani Set e
@@ -96,7 +96,7 @@ public class Property {
     @OneToMany(mappedBy = "propertyId")
     private Set<Review> reviews=new HashSet<>();
 
-    @ManyToMany(fetch=FetchType.LAZY)
+    @ManyToMany(fetch=FetchType.EAGER)
     @JoinTable(name="tbl_property_propdetails",
             joinColumns =  @JoinColumn(name = "propertyDetail_id"),
             inverseJoinColumns = @JoinColumn(name="property_id"))

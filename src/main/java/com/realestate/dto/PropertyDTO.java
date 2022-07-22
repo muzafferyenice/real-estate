@@ -20,7 +20,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class PropertyDTO {
 
-       // private Long id;
+        private Long id;
 
         private String title;
 
@@ -49,6 +49,10 @@ public class PropertyDTO {
         private String city;
 
         private String district;
+
+        private long likes;
+
+        private  long visitCount;
 
        //private Set<String> image;
 
