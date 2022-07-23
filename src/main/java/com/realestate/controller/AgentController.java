@@ -1,6 +1,6 @@
 package com.realestate.controller;
 
-import com.realestate.domain.Agent;
+
 import com.realestate.dto.AgentDTO;
 import com.realestate.dto.response.RealEstateResponse;
 import com.realestate.dto.response.ResponseMessage;
@@ -11,28 +11,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/agent")
 @AllArgsConstructor
 public class AgentController {
 
-    private AgentServiceImpl agentServiceImpl;
+    private AgentServiceImpl agentServiceImpl;//TODO
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<RealEstateResponse> createAgent(HttpServletRequest request,
-                                                          @RequestParam(value="propertyId")Long propertyId,
+    public ResponseEntity<RealEstateResponse> createAgent(@RequestParam(value="propertyId")Long propertyId,
                                                           @Valid @RequestBody AgentDTO agentDTO){
 
-        Long userId = (Long) request.getAttribute("id");//buranin aciklamasi usercontroller da
-       agentServiceImpl.createAgent(agentDTO,userId,propertyId);
 
-
+       agentServiceImpl.createAgent(agentDTO,propertyId);
 
         RealEstateResponse response=new RealEstateResponse();
         response.setMessage(ResponseMessage.AGENT_SAVED_RESPONSE_MESSAGE);
@@ -42,16 +39,16 @@ public class AgentController {
     }
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<Agent>> getAllAgents(){
-        List<Agent> lists= agentServiceImpl.findAllAgents();
+    public ResponseEntity<List<AgentDTO>> getAllAgents(){
+        List<AgentDTO> agentDTOs= agentServiceImpl.getAllAgents();
 
-        return  ResponseEntity.ok(lists);
+        return  ResponseEntity.ok(agentDTOs);
     }
     @GetMapping("/id/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Optional<Agent>> getById(@PathVariable Long agentId){
-        Optional<Agent> lists= agentServiceImpl.findById(agentId);
+    public ResponseEntity<AgentDTO> getAgentById(@PathVariable Long id){
+        AgentDTO agentDTO=agentServiceImpl.findById(id);
 
-        return ResponseEntity.ok(lists);
+        return ResponseEntity.ok(agentDTO);
     }
 }
