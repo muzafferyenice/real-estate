@@ -4,5 +4,4 @@ public enum Category {
     HOUSE,
     VILLA,
     LAND
-
 }

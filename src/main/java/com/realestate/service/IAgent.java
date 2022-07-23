@@ -9,9 +9,9 @@ import java.util.Optional;
 
 public interface IAgent {
 
-    void createAgent(AgentDTO agentDTO, Long userId, Long propertyId);
+    void createAgent(AgentDTO agentDTO, Long propertyId);
 
-    List<Agent> findAllAgents();
+    List<AgentDTO> getAllAgents();
 
-    Optional<Agent> findById(Long agentId);
+    AgentDTO findById(Long agentId);
 }

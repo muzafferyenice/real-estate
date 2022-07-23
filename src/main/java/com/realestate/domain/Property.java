@@ -89,14 +89,13 @@ public class Property {
     @OneToMany(mappedBy = "propertyId")
     private Set<TourRequest> tourRequests=new HashSet<>();
 
-
     @OneToMany(mappedBy = "propertyId")
     private Set<Image> images=new HashSet<>();
 
     @OneToMany(mappedBy = "propertyId")
     private Set<Review> reviews=new HashSet<>();
 
-    @ManyToMany(fetch=FetchType.EAGER)
+    @ManyToMany(fetch=FetchType.LAZY) //eager olursa tum detailler gelir. lazy problemleri cozulebilir
     @JoinTable(name="tbl_property_propdetails",
             joinColumns =  @JoinColumn(name = "propertyDetail_id"),
             inverseJoinColumns = @JoinColumn(name="property_id"))

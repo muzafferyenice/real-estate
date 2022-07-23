@@ -5,6 +5,7 @@ import com.realestate.domain.Property;
 import com.realestate.domain.User;
 import com.realestate.dto.AgentDTO;
 import com.realestate.dto.mapper.AgentMapper;
+import com.realestate.exception.ConflictException;
 import com.realestate.exception.ResourceNotFoundException;
 import com.realestate.exception.message.ErrorMessage;
 import com.realestate.repository.AgentRepository;
@@ -39,7 +40,13 @@ public class AgentServiceImpl implements IAgent {
         }
 */
     @Override
-    public void createAgent(AgentDTO agentDTO, Long agentId, Long propertyId) {
+    public void createAgent(AgentDTO agentDTO,  Long propertyId) {
+       // if (agentRepository.existsByEmail(agentDTO.getEmail())) {
+      //      throw new ConflictException(String.format(ErrorMessage.EMAIL_ALREADY_EXIST, agentDTO.getEmail()));
+      //  }
+      //Agent createAgent=  agentRepository.findById(agentDTO.getId()).orElseThrow(() ->
+             //   new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, agentDTO.getId())));
+
         Property property = propertyRepository.findById(propertyId).orElseThrow(() ->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
 
@@ -51,14 +58,17 @@ public class AgentServiceImpl implements IAgent {
     }
 
     @Override
-    public List<Agent> findAllAgents() {
-        return agentRepository.findAll();
+    public List<AgentDTO> getAllAgents() {
+        List<Agent> agentList=agentRepository.findAll();
+        return agentMapper.map(agentList);
     }
 
     @Override
     //@Transactional(readOnly = true)
-    public Optional<Agent> findById(Long agentId) {
-        return agentRepository.findById(agentId);
+    public AgentDTO findById(Long agentId) {
+      Agent agent=  agentRepository.findById(agentId).orElseThrow(()->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE,agentId)));
+        return agentMapper.agentToAgentDTO(agent);
     }
 }
 
