@@ -1,6 +1,5 @@
 package com.realestate.controller;
 
-
 import com.realestate.dto.PropertyDTO;
 import com.realestate.dto.response.RealEstateResponse;
 import com.realestate.dto.response.ResponseMessage;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-
 import javax.validation.Valid;
 
 @RestController
@@ -19,23 +17,21 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class PropertyControlller {
 
-    private PropertyServiceImpl propertyServiceImpl;
+	private PropertyServiceImpl propertyServiceImpl;
 
-    @PostMapping("/add")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<RealEstateResponse> createProperty
-    			(@RequestParam(value="propertyDetailId") Long propertyDetailId,
-                 @RequestParam(value="agentId") Long agentId,
-                 @Valid @RequestBody PropertyDTO propertyDTO)  {
+	@PostMapping("/add")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<RealEstateResponse> createProperty(
+			@RequestParam(value = "propertyDetailId") Long propertyDetailId,
+			@RequestParam(value = "agentId") Long agentId, @Valid @RequestBody PropertyDTO propertyDTO) {
 
-        propertyServiceImpl.createProperty(propertyDTO, agentId, propertyDetailId);
+		propertyServiceImpl.createProperty(propertyDTO, agentId, propertyDetailId);
 
-        RealEstateResponse response=new RealEstateResponse();
-        response.setMessage(ResponseMessage.PROPERTY_CREATED_RESPONSE_MESSAGE);
-        response.setSuccess(true);
+		RealEstateResponse response = new RealEstateResponse();
+		response.setMessage(ResponseMessage.PROPERTY_CREATED_RESPONSE_MESSAGE);
+		response.setSuccess(true);
 
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
-
+		return new ResponseEntity<>(response, HttpStatus.CREATED);
+	}
 
 }
