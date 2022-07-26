@@ -70,5 +70,14 @@ public class AgentServiceImpl implements IAgent {
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE,agentId)));
         return agentMapper.agentToAgentDTO(agent);
     }
+
+    @Override
+    public void deleteProperty(Long agentId) {
+        Agent agent=agentRepository.findById(agentId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, agentId)));
+
+        agentRepository.delete(agent);
+
+    }
 }
 
