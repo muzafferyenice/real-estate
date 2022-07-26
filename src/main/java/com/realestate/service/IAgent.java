@@ -14,4 +14,7 @@ public interface IAgent {
     List<AgentDTO> getAllAgents();
 
     AgentDTO findById(Long agentId);
+
+    void deleteProperty(Long agentId);
+
 }
