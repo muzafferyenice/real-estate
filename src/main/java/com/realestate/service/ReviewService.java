@@ -68,11 +68,6 @@ public class ReviewService {
 		return reviewDTO;
 	}
 
-	public List<Review> getReviews(Long propertyId) {
-		
-		Property property = propertyRepository.findById(propertyId).orElseThrow(()-> new 
-				ResourceNotFoundException(String.format(ErrorMessage.REVIEW_NOT_FOUND_MESSAGE, propertyId)));
-		return null;
-	}
+
 
 }

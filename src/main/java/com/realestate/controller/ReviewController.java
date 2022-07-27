@@ -75,13 +75,7 @@ public class ReviewController {
 		return ResponseEntity.ok(reviewDTO);
 	}
 	
-	@GetMapping("/{id}")
-	@PreAuthorize("hasRole('CUSTOMER')")
-	public ResponseEntity<List<Review>> getReviews(@PathVariable Long propertyId){
-		
-		List<Review> reviews=reviewService.getReviews(propertyId);
-		return ResponseEntity.ok(reviews);
-	}
+
 	
 
 }
