@@ -26,6 +26,6 @@ public class PropertyDetail {
     @Enumerated(EnumType.STRING)
     private PropertyDetails title;
 
-   
+
 
 }

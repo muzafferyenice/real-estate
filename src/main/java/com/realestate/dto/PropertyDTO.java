@@ -1,8 +1,11 @@
 package com.realestate.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.realestate.domain.Image;
+
+import com.realestate.domain.PropertyDetail;
+
 import com.realestate.domain.enums.Category;
+import com.realestate.domain.enums.PropertyDetails;
 import com.realestate.domain.enums.PropertyStatus;
 import com.realestate.domain.enums.Type;
 import lombok.AllArgsConstructor;
@@ -12,6 +15,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -47,11 +52,11 @@ public class PropertyDTO {
 
         private String district;
 
-        private String status;
-        
-       
-        
-      
+
+        private long likes;
+
+        private  long visitCount;
+
 
 
 

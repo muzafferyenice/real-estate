@@ -11,5 +11,4 @@ public interface PropertyRepository extends JpaRepository<Property, Long> {
 
 
 
-
 }

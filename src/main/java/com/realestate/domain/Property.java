@@ -76,15 +76,16 @@ public class Property {
     private LocalDateTime createDate = LocalDateTime.now();
 
 
-    @Column(length = 50, nullable = true)//bunu ayri bir entity yapiniz
-    private Long likes;
+    @Column(length = 50)//bunu ayri bir entity yapiniz
+    private long likes;
 
-    @Column(length = 50, nullable = false)
-    private  Long visitCount;//primitive d t
+
+    @Column(length = 50)
+    private  long visitCount;//primitive d t
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 50, nullable = false)
-    private PropertyStatus status;
+    @Column(length = 50)
+    private PropertyStatus status=PropertyStatus.ACTIVE;
 
    //JoinColumn one tarafinda kalmayacak many tarafina atilacak table orda olusturulcak
     @OneToMany(mappedBy = "propertyId")

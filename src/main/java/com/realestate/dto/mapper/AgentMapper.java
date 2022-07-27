@@ -1,6 +1,5 @@
 package com.realestate.dto.mapper;
 
-
 import com.realestate.domain.Agent;
 import com.realestate.dto.AgentDTO;
 import org.mapstruct.Mapper;
@@ -14,3 +13,4 @@ public interface AgentMapper {
     AgentDTO agentToAgentDTO(Agent agent);
 
 }
+
