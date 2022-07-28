@@ -21,6 +21,9 @@ public class Agent {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 50)
+    private Long propertyId;
+
     @Column(length = 50, nullable=false)
     private String firstName;
 
@@ -36,6 +39,8 @@ public class Agent {
 
     @OneToMany(mappedBy = "agentId")
     private Set<Property> properties=new HashSet<>();
+
+
 
 
 

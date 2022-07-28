@@ -4,6 +4,7 @@ import com.realestate.domain.Agent;
 import com.realestate.domain.Property;
 import com.realestate.domain.PropertyDetail;
 
+import com.realestate.dto.AgentDTO;
 import com.realestate.dto.PropertyDTO;
 import com.realestate.dto.mapper.AgentMapper;
 import com.realestate.dto.mapper.PropertyMapper;
@@ -14,6 +15,7 @@ import com.realestate.repository.PropertyDetailRepository;
 import com.realestate.repository.PropertyRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -33,6 +35,7 @@ public class PropertyServiceImpl implements IPropertyService {
 
 
     @Override
+    @Transactional
     public void createProperty(PropertyDTO propertyDTO, Long agentId, Long propertyDetailId) {
         Agent agent = agentRepository.findById(agentId).orElseThrow(() ->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, agentId)));
@@ -42,30 +45,27 @@ public class PropertyServiceImpl implements IPropertyService {
 
         Property property = propertyMapper.propertyDTOToProperty(propertyDTO);
 
-        property.getPropertyDetail().add(propertyDetail);
-
         property.setAgentId(agent);
 
-        //property.setStatus(PropertyStatus.ACTIVE);
 
         propertyRepository.save(property);
 
 
     }
 
+    // TODO: Düsün status
     @Override
     public void updateProperty(PropertyDTO propertyDTO, Long agentId, Long propertyId) {
         Agent agent = agentRepository.findById(agentId).orElseThrow(() ->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, agentId)));
 
 
-        Property foundProperty = propertyRepository.findById(propertyId).orElseThrow(() ->
+        Property findProperty = propertyRepository.findById(propertyId).orElseThrow(() ->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
 
         Property property = propertyMapper.propertyDTOToProperty(propertyDTO);
 
-
-        property.setId(foundProperty.getId());
+        property.setId(findProperty.getId());
         property.setAgentId(agent);
         propertyRepository.save(property);
 
@@ -99,5 +99,11 @@ public class PropertyServiceImpl implements IPropertyService {
 
         propertyRepository.save(property);
         return  propertyMapper.propertyToPropertyDTO(property);
+
+    }
+    @Override
+    public List<PropertyDTO> findAllProperties() {
+        List<Property> propertyList = propertyRepository.findAll();
+        return propertyMapper.map(propertyList);
     }
 }

@@ -1,6 +1,7 @@
 package com.realestate.service;
 
 
+import com.realestate.dto.AgentDTO;
 import com.realestate.dto.PropertyDTO;
 import com.realestate.exception.ResourceNotFoundException;
 
@@ -18,7 +19,10 @@ public interface IPropertyService {
 
     List<PropertyDTO> getAllProperty();
 
+
     PropertyDTO getReview(Long id);
 
+
+    List<PropertyDTO> findAllProperties();
 
 }

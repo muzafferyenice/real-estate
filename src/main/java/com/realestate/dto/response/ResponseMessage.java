@@ -9,6 +9,7 @@ public class ResponseMessage {
 	public final static String IMAGE_SAVED_RESPONSE_MESSAGE="Image File Saved Successfully";
 	
 	public final static String AGENT_SAVED_RESPONSE_MESSAGE="Agent Saved Successfully";
+	public final static String AGENT_DELETED_RESPONSE_MESSAGE="Agent Deleted Successfully";
 	public final static String PROPERTY_CREATED_RESPONSE_MESSAGE="Property created Successfully";
 	public static final String PROPERTY_UPDATE_RESPONSE_MESSAGE = "Property updated Successfully";
 	public static final String PROPERTY_DELETED_RESPONSE_MESSAGE = "property Deleted Successfully";
@@ -20,5 +21,5 @@ public class ResponseMessage {
 	public final static String CAR_AVAILABLE_MESSAGE="Car availability calculated";
 
 
-
+	public static final String AGENT_UPDATED_RESPONSE_MESSAGE = "Agent updated Successfully";
 }

@@ -84,6 +84,7 @@ public class Property {
     @Column(length = 50)
     private PropertyStatus status=PropertyStatus.ACTIVE;
 
+
    //JoinColumn one tarafinda kalmayacak many tarafina atilacak table orda olusturulcak
    //@JoinColumn(name = "tour_id")//iliski kurarkene bu bir container a atmalisin yani Set e
     @OneToMany(mappedBy = "propertyId")
