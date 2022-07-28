@@ -29,25 +29,25 @@ public class PropertyDTO {
 	@NotNull(message = "Please provide description")
 	private String description;
 
-	@NotNull
+	@NotNull(message = "Please provide category")
 	private Category category;
 
-	@NotNull
+	@NotNull(message = "Please provide type")
 	private Type type;
 
-	@NotNull
+	@NotNull(message = "Please provide number of bedrooms ")
 	private int bedrooms;
 
-	@NotNull
+	@NotNull(message = "Please provide number of bathrooms")
 	private int bathrooms;
 
-	@NotNull
+	@NotNull(message = "Please provide number of garages")
 	private int garages;
 
-	@NotNull
+	@NotNull(message = "Please provide area")
 	private double area;
 
-	@NotNull
+	@NotNull(message = "Please provide price")
 	private double price;
 
 	@Size(max = 30)
