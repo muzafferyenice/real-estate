@@ -26,11 +26,12 @@ public class AgentController {
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<RealEstateResponse> createAgent(@RequestParam(value="propertyId")Long propertyId,
-                                                          @Valid @RequestBody AgentDTO agentDTO){
+   // public ResponseEntity<RealEstateResponse> createAgent(@RequestParam(value="propertyId")Long propertyId,
+                                                       //   @Valid @RequestBody AgentDTO agentDTO){
+        public ResponseEntity<RealEstateResponse> createAgent( @Valid @RequestBody AgentDTO agentDTO){
 
-
-        iAgent.createAgent(agentDTO,propertyId);
+       // iAgent.createAgent(agentDTO,propertyId);
+        iAgent.createAgent(agentDTO);
 
         RealEstateResponse response=new RealEstateResponse();
         response.setMessage(ResponseMessage.AGENT_SAVED_RESPONSE_MESSAGE);
@@ -54,14 +55,32 @@ public class AgentController {
     }
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<RealEstateResponse> deleteProperty(@PathVariable("id") Long id) {
+    public ResponseEntity<RealEstateResponse> deleteAgent(@PathVariable("id") Long id) {
 
-        iAgent.deleteProperty(id);
+        iAgent.deleteAgent(id);
 
         RealEstateResponse response = new RealEstateResponse();
-        response.setMessage(ResponseMessage.PROPERTY_DELETED_RESPONSE_MESSAGE);
+        response.setMessage(ResponseMessage.AGENT_DELETED_RESPONSE_MESSAGE);
         response.setSuccess(true);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @PutMapping("/admin/auth")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<RealEstateResponse> updateCar(@RequestParam("id") Long id,
+                                                @RequestParam("propertyId") Long propertyId,
+                                                @Valid @RequestBody AgentDTO agentDTO){
+        iAgent.updateAgent(agentDTO,propertyId,id);
+
+        RealEstateResponse response = new RealEstateResponse();
+        response.setMessage(ResponseMessage.AGENT_UPDATED_RESPONSE_MESSAGE);
+        response.setSuccess(true);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+
+
+    }
+
+
 }

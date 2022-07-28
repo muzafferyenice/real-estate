@@ -14,9 +14,12 @@ import com.realestate.repository.UserRepository;
 import lombok.AllArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
+
 
 @Service
 @AllArgsConstructor
@@ -39,13 +42,12 @@ public class AgentServiceImpl implements IAgent {
             agent.setStatus()
         }
 */
+    /*
     @Override
     public void createAgent(AgentDTO agentDTO,  Long propertyId) {
-       // if (agentRepository.existsByEmail(agentDTO.getEmail())) {
-      //      throw new ConflictException(String.format(ErrorMessage.EMAIL_ALREADY_EXIST, agentDTO.getEmail()));
-      //  }
-      //Agent createAgent=  agentRepository.findById(agentDTO.getId()).orElseThrow(() ->
-             //   new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, agentDTO.getId())));
+        if (agentRepository.existsByEmail(agentDTO.getEmail())) {
+            throw new ConflictException(String.format(ErrorMessage.EMAIL_ALREADY_EXIST, agentDTO.getEmail()));
+        }
 
         Property property = propertyRepository.findById(propertyId).orElseThrow(() ->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
@@ -56,24 +58,55 @@ public class AgentServiceImpl implements IAgent {
 
         agentRepository.save(agent);
     }
+*/
+    @Override
+    public void createAgent(AgentDTO agentDTO) {
+        if (agentRepository.existsByEmail(agentDTO.getEmail())) {
+            throw new ConflictException(String.format(ErrorMessage.EMAIL_ALREADY_EXIST, agentDTO.getEmail()));
+        }
+
+        Agent agent = agentMapper.agentDTOToAgent(agentDTO);//mapping done convert dto into entity
+
+        agentRepository.save(agent);
+    }
 
     @Override
     public List<AgentDTO> getAllAgents() {
-        List<Agent> agentList=agentRepository.findAll();
+        List<Agent> agentList = agentRepository.findAll();
         return agentMapper.map(agentList);
     }
 
     @Override
-    //@Transactional(readOnly = true)
+    public void updateAgent(AgentDTO agentDTO, Long propertyId, Long id) {
+        Agent foundAgent = agentRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, id)));
+
+        Property foundProperty = propertyRepository.findById(propertyId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
+
+        Agent agent = agentMapper.agentDTOToAgent(agentDTO);
+
+        agent.setPropertyId(foundProperty.getId());
+
+        Set<Property>property=new HashSet<>();
+        property.add(foundProperty);
+        agent.setProperties(property);
+
+        agent.setId(foundAgent.getId());
+        agentRepository.save(agent);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public AgentDTO findById(Long agentId) {
-      Agent agent=  agentRepository.findById(agentId).orElseThrow(()->
-                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE,agentId)));
+        Agent agent = agentRepository.findById(agentId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, agentId)));
         return agentMapper.agentToAgentDTO(agent);
     }
 
     @Override
-    public void deleteProperty(Long agentId) {
-        Agent agent=agentRepository.findById(agentId).orElseThrow(() ->
+    public void deleteAgent(Long agentId) {
+        Agent agent = agentRepository.findById(agentId).orElseThrow(() ->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, agentId)));
 
         agentRepository.delete(agent);
