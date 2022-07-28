@@ -41,4 +41,18 @@ public class ImageService {
 		
 	}
 
+	public Image getImageById(String id) {
+		Image image = imageRepository.findById(id).orElseThrow(()-> 
+		new ResourceNotFoundException(String.format(ErrorMessage.IMAGE_NOT_FOUND_MESSAGE, id)));
+		return image;
+	}
+
+	public void deleteImageById(String id) {
+		
+		Image image = imageRepository.findById(id).orElseThrow(()-> 
+		new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, id)));
+		imageRepository.delete(image);
+		
+	}
+
 }

@@ -3,6 +3,7 @@ package com.realestate.exception.message;
 public class ErrorMessage {
 
    public final static String RESOURCE_NOT_FOUND_MESSAGE="Resource with id %d not found";
+  
 
 	public final static String REVIEW_NOT_FOUND_MESSAGE="Review with id %d not found";
 
