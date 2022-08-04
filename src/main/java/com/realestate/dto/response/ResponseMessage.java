@@ -17,7 +17,10 @@ public class ResponseMessage {
 	public final static String RESERVATION_DELETED_RESPONSE_MESSAGE="Reservation Deleted Successfully";
 	
 	public final static String CAR_AVAILABLE_MESSAGE="Car availability calculated";
-	  
+
+	public final static String TOURREQUEST_CREATED_RESPONSE_MESSAGE="Tour Request created successfully";
+	public final static String TOURREQUEST_DELETED_RESPONSE_MESSAGE="Tour Request deleted successfully";
+
 	
 
 }

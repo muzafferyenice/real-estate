@@ -24,5 +24,12 @@ public class ErrorMessage {
 
 	public final static String AGENT_ALREADY_EXIST="Agent already exist :%d ";
 
-	
+	public final static String TOUR_REQUEST_NOT_FOUND="Tour Request with id %d not found";
+
+	public final static String TOUR_REQUEST_DATE_INCORRECT_MESSAGE="Tour Request date not correct";
+
+	public final static String TOUR_REQUEST_TIME_INCORRECT_MESSAGE="Tour Request time not correct";
+
+
+    public static final String TOUR_REQUEST_NOT_AVAILABLE_MESSAGE = "Tour Request is not available for selected time";
 }

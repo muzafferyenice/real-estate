@@ -19,7 +19,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="tbl_property")
+@Table(name = "tbl_property")
 public class Property {
 
     @Id
@@ -86,21 +86,21 @@ public class Property {
    //JoinColumn one tarafinda kalmayacak many tarafina atilacak table orda olusturulcak
     @OneToMany(mappedBy = "propertyId")
     //@JoinColumn(name = "tour_id")//iliski kurarkene bu bir container a atmalisin yani Set e
-    private Set<TourRequest> tourRequests=new HashSet<>();
+    private Set<TourRequest> tourRequests = new HashSet<>();
 
 
     @OneToMany(mappedBy = "propertyId")
-    private Set<Image> images=new HashSet<>();
+    private Set<Image> images = new HashSet<>();
 
     @OneToMany(mappedBy = "propertyId")
-    private Set<Review> reviews=new HashSet<>();
+    private Set<Review> reviews = new HashSet<>();
 
-    @ManyToMany(fetch=FetchType.EAGER)
-    @JoinTable(name="tbl_property_propdetails",
-            joinColumns =  @JoinColumn(name = "propertyDetail_id"),
-            inverseJoinColumns = @JoinColumn(name="property_id"))
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "tbl_property_propdetails",
+            joinColumns = @JoinColumn(name = "propertyDetail_id"),
+            inverseJoinColumns = @JoinColumn(name = "property_id"))
 
-    private Set<PropertyDetail> propertyDetail=new HashSet<>();
+    private Set<PropertyDetail> propertyDetail = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "agent_id")
