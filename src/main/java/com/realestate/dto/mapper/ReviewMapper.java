@@ -1,4 +1,4 @@
 package com.realestate.dto.mapper;
 
-public class ReviewMapper {
+public interface ReviewMapper {
 }

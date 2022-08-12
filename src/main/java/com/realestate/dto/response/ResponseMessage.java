@@ -22,4 +22,7 @@ public class ResponseMessage {
 
 
 	public static final String AGENT_UPDATED_RESPONSE_MESSAGE = "Agent updated Successfully";
+    public static final String TOURREQUEST_CREATED_RESPONSE_MESSAGE = "";
+	public static final String TOURREQUEST_UPDATED_RESPONSE_MESSAGE = "";
+	public static final String TOURREQUEST_DELETED_RESPONSE_MESSAGE = "";
 }

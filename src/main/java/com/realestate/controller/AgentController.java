@@ -67,7 +67,7 @@ public class AgentController {
     }
     @PutMapping("/admin/auth")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<RealEstateResponse> updateCar(@RequestParam("id") Long id,
+    public ResponseEntity<RealEstateResponse> updateAgent(@RequestParam("id") Long id,
                                                 @RequestParam("propertyId") Long propertyId,
                                                 @Valid @RequestBody AgentDTO agentDTO){
         iAgent.updateAgent(agentDTO,propertyId,id);

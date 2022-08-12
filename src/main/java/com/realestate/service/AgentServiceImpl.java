@@ -86,13 +86,13 @@ public class AgentServiceImpl implements IAgent {
 
         Agent agent = agentMapper.agentDTOToAgent(agentDTO);
 
-        agent.setPropertyId(foundProperty.getId());
+       // agent.setPropertyId(foundProperty.getId());//agent a yeni bir property set ettik
 
         Set<Property>property=new HashSet<>();
         property.add(foundProperty);
         agent.setProperties(property);
 
-        agent.setId(foundAgent.getId());
+        agent.setId(foundAgent.getId());//agent in id si arttrmasindiye ayni tuttuk
         agentRepository.save(agent);
     }
 
@@ -111,6 +111,8 @@ public class AgentServiceImpl implements IAgent {
 
         agentRepository.delete(agent);
 
+
     }
+
 }
 
