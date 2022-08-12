@@ -22,6 +22,8 @@ public class PropertyDTO {
 
         private Long id;
 
+        private Long agentId;
+
         private String title;
 
         private String description;
