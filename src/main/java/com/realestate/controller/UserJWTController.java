@@ -1,11 +1,16 @@
 package com.realestate.controller;
 
+
+
 import javax.validation.Valid;
 
 import com.realestate.dto.request.LoginRequest;
 import com.realestate.dto.request.RegisterRequest;
-import com.realestate.dto.response.LoginResponse;
+
 import com.realestate.dto.response.RealEstateResponse;
+
+import com.realestate.dto.response.LoginResponse;
+
 import com.realestate.dto.response.ResponseMessage;
 import com.realestate.security.jwt.JwtUtils;
 import com.realestate.service.UserService;
