@@ -22,9 +22,9 @@ public class UserController {
 
     //@CrossOrigin("*")
     @GetMapping("/auth/all")
-   @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<UserDTO>> getAllUsers(){
-        List<UserDTO> users=userService.getAllUsers();
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
 
     }
@@ -34,15 +34,12 @@ public class UserController {
     // AuthTokenFilter classin da 42. satirda id yi aldik
     //46. satirda resource imi icinde yani controllerin icinde setAttribute ile bu tokenin bu id si olarak set etttik
     @PreAuthorize("hasRole('ADMIN') or hasRole('CUSTOMER')")
-    public ResponseEntity<UserDTO> getUserById(HttpServletRequest request){
-       Long id = (Long) request.getAttribute("id");
-        UserDTO userDTO=userService.findById(id);
+    public ResponseEntity<UserDTO> getUserById(HttpServletRequest request) {
+        Long id = (Long) request.getAttribute("id");
+        UserDTO userDTO = userService.findById(id);
 
         return ResponseEntity.ok(userDTO);
     }
 
 
-
-
-
-        }
+}
