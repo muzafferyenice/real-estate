@@ -23,67 +23,43 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/image")
 @AllArgsConstructor
 public class ImageController {
-	
+
 	private ImageService imageService;
-	
+
 	@PostMapping("/upload/{id}")
-	public ResponseEntity<RealEstateResponse> uploadImage (@PathVariable("id") Long propertyId ,@RequestParam("file") MultipartFile file) throws IOException{
-		
+	public ResponseEntity<RealEstateResponse> uploadImage(@PathVariable("id") Long propertyId,
+			@RequestParam("file") MultipartFile file) throws IOException {
+
 		String imageId = imageService.saveImage(propertyId, file);
-		
+
 		RealEstateResponse response = new RealEstateResponse();
-		
+
 		response.setMessage("Image is saved succesfully");
 		response.setSuccess(true);
-		
+
 		return ResponseEntity.ok(response);
-		
-				
+
 	}
-	
+
 	@GetMapping("/get/{id}")
-	public ResponseEntity<byte []> getImage(@PathVariable("id") String id){
+	public ResponseEntity<byte[]> getImage(@PathVariable("id") String id) {
 		Image image = imageService.getImageById(id);
-		
-		
-		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename="+  //TODO : bu kısıma bakılacak
+
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + // TODO : bu kısıma
+																										// bakılacak
 				image.getName()).body(image.getImage());
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<RealEstateResponse> deleteImage(@PathVariable("id") String id){
+	public ResponseEntity<RealEstateResponse> deleteImage(@PathVariable("id") String id) {
 		imageService.deleteImageById(id);
-		
+
 		RealEstateResponse response = new RealEstateResponse();
-		
+
 		response.setMessage("Image is saved succesfully");
 		response.setSuccess(true);
-		
+
 		return ResponseEntity.ok(response);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
