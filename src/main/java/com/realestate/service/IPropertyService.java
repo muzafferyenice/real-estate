@@ -4,7 +4,9 @@ package com.realestate.service;
 import com.realestate.dto.AgentDTO;
 import com.realestate.dto.PropertyDTO;
 import com.realestate.exception.ResourceNotFoundException;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.List;
 
 public interface IPropertyService {
@@ -24,5 +26,7 @@ public interface IPropertyService {
 
 
     List<PropertyDTO> findAllProperties();
+
+    List<PropertyDTO> searchProperties(PropertyDTO propertyDTO);
 
 }

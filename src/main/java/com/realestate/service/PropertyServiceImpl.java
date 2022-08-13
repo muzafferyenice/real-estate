@@ -106,4 +106,15 @@ public class PropertyServiceImpl implements IPropertyService {
         List<Property> propertyList = propertyRepository.findAll();
         return propertyMapper.map(propertyList);
     }
+
+    @Override
+    public List<PropertyDTO> searchProperties(PropertyDTO propertyDTO) {
+
+        List<Property> propertyList=  propertyRepository.findByTitleOrTypeOrPriceOrBedroomsOrBathroomsOrCountryOrCityOrDistrict(
+                propertyDTO.getTitle(),propertyDTO.getType(),propertyDTO.getPrice(),
+                propertyDTO.getBedrooms(),propertyDTO.getBathrooms(),
+                propertyDTO.getCountry(),propertyDTO.getCity(),propertyDTO.getDistrict());
+
+        return propertyMapper.map(propertyList);
+    }
 }

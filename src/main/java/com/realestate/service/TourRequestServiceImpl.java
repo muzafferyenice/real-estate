@@ -37,14 +37,6 @@ public class TourRequestServiceImpl implements ITourRequestService {
 
     private TourRequestMapper tourRequestMapper;
 
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<TourRequest> findAllTourRequestByStatus(String tourRequestStatus) {
-
-        return tourRequestRepository.findTourRequestByStatus(tourRequestStatus);
-    }
-
     @Override
     @Transactional(readOnly = true)
     public TourRequestDTO findByIdTourRequest(Long tourRequestId) throws ResourceNotFoundException {
@@ -55,12 +47,16 @@ public class TourRequestServiceImpl implements ITourRequestService {
 
         return tourRequestDTO;
     }
-    @Override
-    @Transactional(readOnly=true)
-    public List<TourRequestDTO> findAll(){
 
-       return  tourRequestRepository.findAllBy();
+    @Override
+    public List<TourRequestDTO> getAll() {
+        List<TourRequest> list=tourRequestRepository.findAll();
+
+        return tourRequestMapper.map(list);
     }
+
+
+
     @Override
     @Transactional
     public void createTourRequest(TourRequestRequest tourRequestRequest, Long userId, Long propertyId) {
@@ -77,12 +73,12 @@ public class TourRequestServiceImpl implements ITourRequestService {
 
         TourRequest tourRequest = tourRequestMapper.tourRequestDTOToTourRequest(tourRequestRequest);
 
-        if (!propertyStatus){
+        if (!propertyStatus) {
             tourRequest.setStatus(TourRequestStatus.PENDING);
-        }else {
+        } else {
             throw new BadRequestException(ErrorMessage.TOUR_REQUEST_NOT_AVAILABLE_MESSAGE);
         }
-          tourRequest.setPropertyId(property);
+        tourRequest.setPropertyId(property);
 
         tourRequest.setUserId(user);
 
@@ -91,10 +87,24 @@ public class TourRequestServiceImpl implements ITourRequestService {
 
     @Override
     @Transactional
-    public void updateTourRequest(Long id,Long tourRequestId, TourRequestUpdateRequest tourRequestUpdateRequest) {
+    public void updateTourRequest(Long id, Long tourRequestId, TourRequestUpdateRequest tourRequestUpdateRequest) {
 
 
         tourRequestRepository.update(id, tourRequestUpdateRequest.getAdult(), tourRequestUpdateRequest.getChild());
+
+    }
+    @Override
+    public void updateStatus(Long tourRequestId, TourRequestDTO tourRequestDTO) {
+        TourRequest tourRequest=  tourRequestRepository.findById(tourRequestId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.TOUR_REQUEST_NOT_FOUND, tourRequestId)));
+
+      TourRequest tourRequest2= tourRequestMapper.tourRequestDTO2ToTourRequest(tourRequestDTO);
+
+      tourRequest2.setId(tourRequest.getId());
+      tourRequest2.setPropertyId(tourRequest.getPropertyId());
+      tourRequest2.setUserId(tourRequest.getUserId());
+
+      tourRequestRepository.save(tourRequest2);
 
     }
 
@@ -107,7 +117,6 @@ public class TourRequestServiceImpl implements ITourRequestService {
         tourRequestRepository.delete(tourRequest);
 
     }
-
 
 
     private void checkTourRequestTimeIsCorrect(LocalDateTime tourRequestFirstTime, LocalDateTime tourRequestLastTime) {

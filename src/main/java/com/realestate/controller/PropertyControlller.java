@@ -24,6 +24,17 @@ public class PropertyControlller {
 
     private IPropertyService iPropertyService;
 
+
+    @GetMapping("search")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity <List<PropertyDTO>> searhProperty( @Valid @RequestBody PropertyDTO propertyDTO) {
+
+        List<PropertyDTO> property=  iPropertyService.searchProperties(propertyDTO);
+
+        return ResponseEntity.ok(property);
+    }
+
+
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<RealEstateResponse> createProperty(@RequestParam(value="propertyDetailId") Long propertyDetailId,
@@ -41,7 +52,7 @@ public class PropertyControlller {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('CUSTOMER') or hasRole('ADMIN')")
-    public ResponseEntity<PropertyDTO> getReview(@PathVariable("id") Long id) {
+    public ResponseEntity<PropertyDTO> getProperty(@PathVariable("id") Long id) {
 
         PropertyDTO propertyDTO=  iPropertyService.getReview(id);
 

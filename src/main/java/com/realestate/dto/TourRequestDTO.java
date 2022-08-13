@@ -15,11 +15,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class TourRequestDTO {
 
-    //private Long id;
-
-//    private PropertyDTO propertyId;
-//
-//    private Long userId;
 
     private LocalDateTime tourRequestFirstTime;
 

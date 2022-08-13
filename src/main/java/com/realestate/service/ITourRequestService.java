@@ -9,11 +9,9 @@ import com.realestate.dto.request.TourRequestUpdateRequest;
 import com.realestate.exception.ResourceNotFoundException;
 
 import java.util.List;
-import java.util.Optional;
+
 
 public interface ITourRequestService {
-
-    List<TourRequest> findAllTourRequestByStatus(String tourRequestStatus);
 
     TourRequestDTO findByIdTourRequest(Long tourRequestId) throws ResourceNotFoundException;
 
@@ -23,5 +21,7 @@ public interface ITourRequestService {
 
     void deleteTourRequest(Long id, Long tourRequestId);
 
-   List<TourRequestDTO>  findAll() throws ResourceNotFoundException;
+   List<TourRequestDTO>  getAll() throws ResourceNotFoundException;
+
+    void updateStatus(Long tourRequestId, TourRequestDTO tourRequestDTO);
 }
