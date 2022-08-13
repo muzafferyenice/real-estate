@@ -4,14 +4,21 @@ package com.realestate.service;
 import com.realestate.domain.Agent;
 import com.realestate.dto.AgentDTO;
 
+
 import java.util.List;
-import java.util.Optional;
+
 
 public interface IAgent {
 
-    void createAgent(AgentDTO agentDTO, Long userId, Long propertyId);
 
-    List<Agent> findAllAgents();
+    void createAgent(AgentDTO agentDTO);
 
-    Optional<Agent> findById(Long agentId);
+    List<AgentDTO> getAllAgents();
+
+    void updateAgent(AgentDTO agentDTO, Long propertyId,Long id);
+
+    AgentDTO findById(Long agentId);
+
+    void deleteAgent(Long agentId);
+
 }

@@ -1,6 +1,7 @@
 package com.realestate.domain;
 
 
+import com.realestate.domain.enums.TourRequestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,10 +24,10 @@ public class TourRequest {
     private Long id;
 
     @Column(length = 50, nullable = false)
-    private LocalDateTime date;
+    private LocalDateTime tourRequestFirstTime;
 
     @Column(length = 50, nullable = false)
-    private LocalDateTime time;
+    private LocalDateTime tourRequestLastTime;
 
     @Column(length = 50, nullable = false)
     private int adult;
@@ -34,11 +35,11 @@ public class TourRequest {
     @Column(length = 50, nullable = false)
     private int child;
 
-    @Column(length = 50, nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(length=30,nullable=false)
+    private TourRequestStatus status;
 
-
-    @ManyToOne//
+    @ManyToOne
     @JoinColumn(name = "property_id")
     private Property propertyId;
 

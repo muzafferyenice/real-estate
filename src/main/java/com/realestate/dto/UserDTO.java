@@ -39,7 +39,7 @@ public class UserDTO {//datalogic ile ilgili hicbirsey burda olmamali
 
         roles.forEach(r -> {
             if (r.getName().equals(RoleType.ROLE_ADMIN))
-                rolesStr.add("Administrator reis yaa");
+                rolesStr.add("Administrator o is sende ");
             else
                 rolesStr.add("Customer");
         });//cool lambda syntax

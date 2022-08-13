@@ -2,6 +2,7 @@ package com.realestate.dto;
 
 import com.realestate.domain.Agent;
 import com.realestate.domain.Property;
+import com.realestate.service.IAgent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,10 @@ import java.util.Set;
 @NoArgsConstructor
 public class AgentDTO {
 
+
     private Long id;
+
+    private Long propertyId;
 
     @Size(max = 50)
     @NotNull(message = "Please provide your first name")
@@ -43,6 +47,7 @@ public class AgentDTO {
     @Size(min = 5, max = 200)
     @NotNull(message = "Please provide your email")
     private String email;
+
 
 
 

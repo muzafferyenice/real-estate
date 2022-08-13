@@ -4,6 +4,9 @@ public enum PropertyDetails {
 
     AIR_CONDITIONING,
     DISHWASHER,
-    POOL
+    POOL,
+    //butun ozellikleri buraya tanimlariz
+    GARDEN,
+    GARRAGE
 
     }

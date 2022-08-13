@@ -1,38 +1,37 @@
 package com.realestate.controller;
 
-import com.realestate.domain.Agent;
+
 import com.realestate.dto.AgentDTO;
 import com.realestate.dto.response.RealEstateResponse;
 import com.realestate.dto.response.ResponseMessage;
 import com.realestate.service.AgentServiceImpl;
+import com.realestate.service.IAgent;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/agent")
 @AllArgsConstructor
 public class AgentController {
 
-    private AgentServiceImpl agentServiceImpl;
+    private IAgent iAgent;//TODO
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<RealEstateResponse> createAgent(HttpServletRequest request,
-                                                          @RequestParam(value="propertId")Long propertyId,
-                                                          @Valid @RequestBody AgentDTO agentDTO){
+   // public ResponseEntity<RealEstateResponse> createAgent(@RequestParam(value="propertyId")Long propertyId,
+                                                       //   @Valid @RequestBody AgentDTO agentDTO){
+        public ResponseEntity<RealEstateResponse> createAgent( @Valid @RequestBody AgentDTO agentDTO){
 
-        Long userId = (Long) request.getAttribute("id");//buranin aciklamasi usercontroller da
-       agentServiceImpl.createAgent(agentDTO,userId,propertyId);
-
-
+       // iAgent.createAgent(agentDTO,propertyId);
+        iAgent.createAgent(agentDTO);
 
         RealEstateResponse response=new RealEstateResponse();
         response.setMessage(ResponseMessage.AGENT_SAVED_RESPONSE_MESSAGE);
@@ -42,16 +41,46 @@ public class AgentController {
     }
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<Agent>> getAllAgents(){
-        List<Agent> lists= agentServiceImpl.findAllAgents();
+    public ResponseEntity<List<AgentDTO>> getAllAgents(){
+        List<AgentDTO> agentDTOs= iAgent.getAllAgents();
 
-        return  ResponseEntity.ok(lists);
+        return  ResponseEntity.ok(agentDTOs);
     }
     @GetMapping("/id/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Optional<Agent>> getById(@PathVariable Long agentId){
-        Optional<Agent> lists= agentServiceImpl.findById(agentId);
+    public ResponseEntity<AgentDTO> getAgentById(@PathVariable Long id){
+        AgentDTO agentDTO=iAgent.findById(id);
 
-        return ResponseEntity.ok(lists);
+        return ResponseEntity.ok(agentDTO);
     }
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<RealEstateResponse> deleteAgent(@PathVariable("id") Long id) {
+
+        iAgent.deleteAgent(id);
+
+        RealEstateResponse response = new RealEstateResponse();
+        response.setMessage(ResponseMessage.AGENT_DELETED_RESPONSE_MESSAGE);
+        response.setSuccess(true);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @PutMapping("/admin/auth")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<RealEstateResponse> updateAgent(@RequestParam("id") Long id,
+                                                @RequestParam("propertyId") Long propertyId,
+                                                @Valid @RequestBody AgentDTO agentDTO){
+        iAgent.updateAgent(agentDTO,propertyId,id);
+
+        RealEstateResponse response = new RealEstateResponse();
+        response.setMessage(ResponseMessage.AGENT_UPDATED_RESPONSE_MESSAGE);
+        response.setSuccess(true);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+
+
+
+    }
+
+
 }
