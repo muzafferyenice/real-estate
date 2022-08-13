@@ -32,7 +32,7 @@ public class ErrorMessage {
 
 
 	public static final String TOUR_REQUEST_TIME_INCORRECT_MESSAGE = "Tour request time is not correct";
-    public static final String TOUR_REQUEST_NOT_FOUND = "TourRequest with name %s not found";
+    public static final String TOUR_REQUEST_NOT_FOUND = "TourRequest with numbaer %s not found";
 
     public static final String TOUR_REQUEST_NOT_AVAILABLE_MESSAGE = "TourRequest is not available now";
 }

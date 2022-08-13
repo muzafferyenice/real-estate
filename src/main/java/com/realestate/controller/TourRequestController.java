@@ -26,16 +26,11 @@ public class TourRequestController {
 
     private ITourRequestService tourRequestService;
 
-    @GetMapping("/getAllByStatus")
-    public ResponseEntity<List<TourRequest>> getAllTourRequestByStatus(@RequestParam String status ){
-        List<TourRequest> list=tourRequestService.findAllTourRequestByStatus(status);
 
-        return ResponseEntity.ok(list);
-    }
     @GetMapping("/all")
     public ResponseEntity<List<TourRequestDTO>> getAllTourRequest(){
 
-         List<TourRequestDTO> list=tourRequestService.findAll();
+         List<TourRequestDTO> list=tourRequestService.getAll();
 
         return  ResponseEntity.ok(list);
 
@@ -72,6 +67,19 @@ public class TourRequestController {
 
         Long id = (Long) httpServletRequest.getAttribute("id");
         tourRequestService.updateTourRequest(id,tourRequestId, tourRequestUpdateRequest);
+
+        RealEstateResponse response = new RealEstateResponse();
+        response.setMessage(ResponseMessage.TOURREQUEST_UPDATED_RESPONSE_MESSAGE);
+        response.setSuccess(true);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @PutMapping("admin/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<RealEstateResponse> updateTourRequest(@PathVariable("id") Long tourRequestId,
+                                                                @Valid @RequestBody TourRequestDTO tourRequestDTO){
+
+        tourRequestService.updateStatus(tourRequestId, tourRequestDTO);
 
         RealEstateResponse response = new RealEstateResponse();
         response.setMessage(ResponseMessage.TOURREQUEST_UPDATED_RESPONSE_MESSAGE);
