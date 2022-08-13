@@ -29,7 +29,7 @@ public class UserService {
 
     private PasswordEncoder passwordEncoder;
 
-    private UserMapper userMapper;//mapper ne yapiyordu mapstruck doc una bakiniz
+    private UserMapper userMapper;
 
     public void register(RegisterRequest registerRequest) {
         if (userRepository.existsByEmail(registerRequest.getEmail())) {
