@@ -23,10 +23,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class TourRequestServiceImpl implements ITourRequestService{
+public class TourRequestServiceImpl implements ITourRequestService {
 
     private TourRequestRepository tourRequestRepository;
 
@@ -38,51 +39,60 @@ public class TourRequestServiceImpl implements ITourRequestService{
 
 
     @Override
-    public List<TourRequest> findAllTourRequestByStatus(TourRequestStatus tourRequestStatus) {
-        return tourRequestRepository.findTourRequestByStatus(tourRequestStatus.name());
+    @Transactional(readOnly = true)
+    public List<TourRequest> findAllTourRequestByStatus(String tourRequestStatus) {
+
+        return tourRequestRepository.findTourRequestByStatus(tourRequestStatus);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public TourRequestDTO findByIdTourRequest(Long tourRequestId) throws ResourceNotFoundException {
-        TourRequest tourRequest = tourRequestRepository.findById(tourRequestId).orElseThrow(()->
-                new ResourceNotFoundException(String.format(ErrorMessage.TOUR_REQUEST_NOT_FOUND,tourRequestId)));
+        TourRequest tourRequest = tourRequestRepository.findById(tourRequestId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.TOUR_REQUEST_NOT_FOUND, tourRequestId)));
 
         TourRequestDTO tourRequestDTO = tourRequestMapper.tourRequestToTourRequestDTO(tourRequest);
 
-        return  tourRequestDTO;
+        return tourRequestDTO;
     }
+    @Override
+    @Transactional(readOnly=true)
+    public List<TourRequestDTO> findAll(){
 
+       return  tourRequestRepository.findAllBy();
+    }
     @Override
     @Transactional
-    public void createTourRequest(TourRequestRequest tourRequestRequest,Long userId,Long propertyId) {
-        checkTourRequestTimeIsCorrect(tourRequestRequest.getTourRequestFirstTime(),tourRequestRequest.getTourRequestLastTime());
+    public void createTourRequest(TourRequestRequest tourRequestRequest, Long userId, Long propertyId) {
 
-        Property property=propertyRepository.findById(propertyId).orElseThrow(()->
-                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE,propertyId)));
+        checkTourRequestTimeIsCorrect(tourRequestRequest.getTourRequestFirstTime(), tourRequestRequest.getTourRequestLastTime());
 
-        boolean propertyStatus= checkPropertyAvailability(propertyId,tourRequestRequest.getTourRequestFirstTime(),tourRequestRequest.getTourRequestLastTime());
+        Property property = propertyRepository.findById(propertyId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
 
-        User user = userRepository.findById(userId).orElseThrow(()->
-                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE,userId)));
+        boolean propertyStatus = checkPropertyAvailability(propertyId, tourRequestRequest.getTourRequestFirstTime(), tourRequestRequest.getTourRequestLastTime());
 
-        TourRequest tourRequest=tourRequestMapper.tourRequestDTOToTourRequest(tourRequestRequest);
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, userId)));
+
+        TourRequest tourRequest = tourRequestMapper.tourRequestDTOToTourRequest(tourRequestRequest);
 
         if (!propertyStatus){
             tourRequest.setStatus(TourRequestStatus.PENDING);
         }else {
             throw new BadRequestException(ErrorMessage.TOUR_REQUEST_NOT_AVAILABLE_MESSAGE);
         }
+          tourRequest.setPropertyId(property);
 
-        tourRequest.setPropertyId(property);
         tourRequest.setUserId(user);
 
         tourRequestRepository.save(tourRequest);
     }
 
     @Override
-    public void updateTourRequest(Long id, TourRequestUpdateRequest tourRequestUpdateRequest) {
+    @Transactional
+    public void updateTourRequest(Long id,Long tourRequestId, TourRequestUpdateRequest tourRequestUpdateRequest) {
 
-        tourRequestRepository.findById(id);
 
         tourRequestRepository.update(id, tourRequestUpdateRequest.getAdult(), tourRequestUpdateRequest.getChild());
 
@@ -91,35 +101,35 @@ public class TourRequestServiceImpl implements ITourRequestService{
     @Override
     public void deleteTourRequest(Long id, Long tourRequestId) {
 
-        userRepository.findById(id);
+        TourRequest tourRequest = tourRequestRepository.findById(tourRequestId).orElseThrow(() ->
+                new ResourceNotFoundException(String.format(ErrorMessage.TOUR_REQUEST_NOT_FOUND, tourRequestId)));
 
-        TourRequest tourRequest=tourRequestRepository.findById(tourRequestId).orElseThrow(()->
-                new ResourceNotFoundException(String.format(ErrorMessage.TOUR_REQUEST_NOT_FOUND,tourRequestId)));
         tourRequestRepository.delete(tourRequest);
 
     }
 
-    private void checkTourRequestTimeIsCorrect(LocalDateTime tourRequestFirstTime,LocalDateTime tourRequestLastTime){
+
+
+    private void checkTourRequestTimeIsCorrect(LocalDateTime tourRequestFirstTime, LocalDateTime tourRequestLastTime) {
         LocalDateTime now = LocalDateTime.now();
 
-        if (tourRequestFirstTime.isBefore(now)){
+        if (tourRequestFirstTime.isBefore(now)) {
             throw new BadRequestException(String.format(ErrorMessage.TOUR_REQUEST_DATE_INCORRECT_MESSAGE));
         }
-        boolean isEqual= tourRequestFirstTime.isEqual(tourRequestLastTime)?true:false;
-        boolean isBefore=tourRequestFirstTime.isBefore(tourRequestLastTime)?true:false;
+        boolean isEqual = tourRequestFirstTime.isEqual(tourRequestLastTime) ? true : false;
+        boolean isBefore = tourRequestFirstTime.isBefore(tourRequestLastTime) ? true : false;
 
-        if(isEqual||!isBefore) {
+        if (isEqual || !isBefore) {
             throw new BadRequestException(ErrorMessage.RESERVATION_TIME_INCORRECT_MESSAGE);
         }
     }
 
-    public boolean checkPropertyAvailability(Long propertyId,LocalDateTime firstDate,LocalDateTime lastDate){
+    public boolean checkPropertyAvailability(Long propertyId, LocalDateTime firstDate, LocalDateTime lastDate) {
 
-        Property property = propertyRepository.findById(propertyId).get();
+        TourRequestStatus[] status = {TourRequestStatus.CANCELED, TourRequestStatus.DONE, TourRequestStatus.REJECTED};
 
-         TourRequestStatus[] status= {TourRequestStatus.CANCELED,TourRequestStatus.DONE,TourRequestStatus.REJECTED};
+        List<TourRequest> existReservations = tourRequestRepository.checkPropertyStatus(propertyId, firstDate, lastDate, status);
 
-        List<TourRequest> existReservations = tourRequestRepository.checkPropertyStatus(property,firstDate,lastDate,status);
-         return !existReservations.isEmpty();
+        return !existReservations.isEmpty();
     }
 }

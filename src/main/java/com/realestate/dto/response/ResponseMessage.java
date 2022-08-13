@@ -17,12 +17,11 @@ public class ResponseMessage {
 	public final static String RESERVATION_SAVED_RESPONSE_MESSAGE="Reservation Saved Successfully";
 	public final static String RESERVATION_UPDATE_RESPONSE_MESSAGE="Reservation Updated Successfully";
 	public final static String RESERVATION_DELETED_RESPONSE_MESSAGE="Reservation Deleted Successfully";
-	
-	public final static String CAR_AVAILABLE_MESSAGE="Car availability calculated";
+
 
 
 	public static final String AGENT_UPDATED_RESPONSE_MESSAGE = "Agent updated Successfully";
-    public static final String TOURREQUEST_CREATED_RESPONSE_MESSAGE = "";
-	public static final String TOURREQUEST_UPDATED_RESPONSE_MESSAGE = "";
-	public static final String TOURREQUEST_DELETED_RESPONSE_MESSAGE = "";
+    public static final String TOURREQUEST_CREATED_RESPONSE_MESSAGE = "TourRequest created Successfully";
+	public static final String TOURREQUEST_UPDATED_RESPONSE_MESSAGE = "Update Successfully Done";
+	public static final String TOURREQUEST_DELETED_RESPONSE_MESSAGE = "TourRequest Deleted Successfully";
 }
