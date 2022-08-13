@@ -54,6 +54,8 @@ public class PropertyDTO {
 
         private  long visitCount;
 
+        private Set<PropertyDetail> propertyDetail=new HashSet<>();
+
 
 
 

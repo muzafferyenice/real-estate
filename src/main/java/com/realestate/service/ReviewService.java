@@ -28,6 +28,8 @@ import java.util.Objects;
 public class ReviewService {
 
 
+    // TODO: CLASS DEGİSECEK
+
     @Autowired
     private ReviewRepository reviewRepository;
 
@@ -41,18 +43,16 @@ public class ReviewService {
 
     private ReviewMapper reviewMapper;
 
-    public void createReview(Long propertyId, Long userId, ReviewDTO reviewDTO) {
+    public void createReview(Long propertyId, User userId, ReviewDTO reviewDTO) {
 
         Property property = propertyRepository.findById(propertyId).orElseThrow(() ->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
 
-        User user = userRepository.findById(userId).orElseThrow(() ->
-                new ResourceNotFoundException(String.format(ErrorMessage.USERID_NOT_FOUND_MESSAGE, userId)));
 
         Review review = reviewMapper.reviewDTOToReview(reviewDTO);
         review.setPropertyId(property);
         review.setStatus(ReviewStatus.PUBLISHED);
-        review.setUserId(user);
+        review.setUserId(userId);
 
         reviewRepository.save(review);
     }
@@ -74,7 +74,7 @@ public class ReviewService {
     }
 
 
-    public void updateCustomerReview(Long propertyId, Long userId, ReviewDTO reviewDTO, Long reviewId) {
+    public void updateReview(Long propertyId, Long userId, ReviewDTO reviewDTO, Long reviewId) {
         Review foundReview = reviewRepository.findById(reviewId).orElseThrow(() ->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, reviewId)));
 
@@ -108,8 +108,8 @@ public class ReviewService {
     }
 
 
-    public List<ReviewDTO> getReviews(Long propertyId,Long curretylUserId) {
-        Property property=propertyRepository.findById(propertyId).orElseThrow(() ->
+    public List<ReviewDTO> getReviews(Long propertyId, Long curretylUserId) {
+        Property property = propertyRepository.findById(propertyId).orElseThrow(() ->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
         Role role = roleRepository.findByName(RoleType.ROLE_CUSTOMER).orElseThrow(() -> new ResourceNotFoundException(
                 String.format(ErrorMessage.ROLE_NOT_FOUND_MESSAGE, RoleType.ROLE_CUSTOMER.name())));
@@ -122,16 +122,16 @@ public class ReviewService {
 
             List<Review> reviews = reviewRepository.findByUserIdId(curretylUserId).orElseThrow(() ->
                     new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, curretylUserId)));
-            List<Review> review2=new ArrayList<>();
+            List<Review> review2 = new ArrayList<>();
 
-            for (Review review: reviews) {
-                if(review.getPropertyId().getId().equals(propertyId)){
+            for (Review review : reviews) {
+                if (review.getPropertyId().getId().equals(propertyId)) {
                     review2.add(review);
                 }
             }
 
             return reviewMapper.map(review2);
-        }else {
+        } else {
             List<Review> reviews = reviewRepository.findByPropertyIdId(propertyId).orElseThrow(() ->
                     new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, propertyId)));
             return reviewMapper.map(reviews);

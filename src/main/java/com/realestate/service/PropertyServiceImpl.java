@@ -86,13 +86,14 @@ public class PropertyServiceImpl implements IPropertyService {
     }
 
     @Override
-    public PropertyDTO getReview(Long id) {
+    public PropertyDTO getProperty(Long id) {
         Property property=propertyRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException(String.format(ErrorMessage.RESOURCE_NOT_FOUND_MESSAGE, id)));
 
-        property.setVisitCount(property.getVisitCount()+1);
+        property.setVisitCount(property.getVisitCount()+1);// bekir beye sor
 
         propertyRepository.save(property);
+
       return  propertyMapper.propertyToPropertyDTO(property);
     }
 }

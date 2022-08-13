@@ -5,6 +5,7 @@ import com.realestate.dto.PropertyDTO;
 import com.realestate.dto.ReviewDTO;
 import com.realestate.dto.response.RealEstateResponse;
 import com.realestate.dto.response.ResponseMessage;
+import com.realestate.service.IPropertyService;
 import com.realestate.service.PropertyServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class PropertyControlller {
 
-    private PropertyServiceImpl propertyServiceImpl;
+    private IPropertyService propertyService;
 
     @PostMapping("/add")
     @PreAuthorize("hasRole('ADMIN')")
@@ -28,7 +29,7 @@ public class PropertyControlller {
                                                              @RequestParam(value="agentId") Long agentId,
                                                              @Valid @RequestBody PropertyDTO propertyDTO){
 
-        propertyServiceImpl.createProperty(propertyDTO, agentId, propertyDetailId);
+        propertyService.createProperty(propertyDTO, agentId, propertyDetailId);
 
         RealEstateResponse response=new RealEstateResponse();
         response.setMessage(ResponseMessage.PROPERTY_CREATED_RESPONSE_MESSAGE);
@@ -41,7 +42,7 @@ public class PropertyControlller {
     @PreAuthorize("hasRole('CUSTOMER') or hasRole('ADMIN')")
     public ResponseEntity<PropertyDTO> getReview(@PathVariable("id") Long id) {
 
-        PropertyDTO propertyDTO=  propertyServiceImpl.getReview(id);
+        PropertyDTO propertyDTO=  propertyService.getProperty(id);
 
         return ResponseEntity.ok(propertyDTO);
     }
@@ -51,7 +52,7 @@ public class PropertyControlller {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<RealEstateResponse> deleteProperty(@PathVariable("id") Long id){
 
-        propertyServiceImpl.deleteProperty(id);
+        propertyService.deleteProperty(id);
 
         RealEstateResponse response=new RealEstateResponse();
         response.setMessage(ResponseMessage.PROPERTY_DELETED_RESPONSE_MESSAGE);
@@ -67,7 +68,7 @@ public class PropertyControlller {
                                                              @RequestParam(value="agentId") Long agentId,
                                                              @Valid @RequestBody PropertyDTO propertyDTO){
 
-        propertyServiceImpl.updateProperty(propertyDTO,agentId,propertyId);
+        propertyService.updateProperty(propertyDTO,agentId,propertyId);
 
         RealEstateResponse response=new RealEstateResponse();
         response.setMessage(ResponseMessage.PROPERTY_UPDATE_RESPONSE_MESSAGE);

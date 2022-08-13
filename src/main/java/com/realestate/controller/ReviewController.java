@@ -1,6 +1,7 @@
 package com.realestate.controller;
 
 import com.realestate.domain.Review;
+import com.realestate.domain.User;
 import com.realestate.dto.ReviewDTO;
 import com.realestate.dto.response.RealEstateResponse;
 import com.realestate.service.ReviewService;
@@ -29,7 +30,7 @@ public class ReviewController {
                                                            @PathVariable("id") Long propertyId,
                                                            @Valid @RequestBody ReviewDTO reviewDTO){
 
-        Long userId= (Long) request.getAttribute("id");
+         User userId= (User) request.getAttribute("id");
 
         reviewService.createReview(propertyId,userId,reviewDTO);
 
@@ -67,13 +68,13 @@ public class ReviewController {
 
     @PutMapping("/update")
     @PreAuthorize("hasRole('CUSTOMER') or hasRole('ADMIN')")
-    public ResponseEntity<RealEstateResponse> updateCustomerReview(HttpServletRequest request,
+    public ResponseEntity<RealEstateResponse> updateReview(HttpServletRequest request,
                                                                    @RequestParam(value = "propertyId") Long propertyId,
                                                                    @RequestParam(value = "reviewId") Long reviewId,
                                                                    @Valid @RequestBody ReviewDTO reviewDTO){
         Long userId= (Long) request.getAttribute("id");
 
-        reviewService.updateCustomerReview(propertyId,userId,reviewDTO,reviewId);
+        reviewService.updateReview(propertyId,userId,reviewDTO,reviewId);
 
         RealEstateResponse realEstateResponse = new RealEstateResponse();
         realEstateResponse.setMessage("Your review is updated");

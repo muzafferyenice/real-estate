@@ -24,18 +24,18 @@ public class Image {
     private String id;
 
 
-    private String featured;
+    private String name;
 
     @JsonIgnore
     @Lob
-    private byte[] data;
+    private byte[] image;
 
     @ManyToOne
     @JoinColumn(name = "property_id")
     private Property propertyId;
 
-    public Image(String name, String type,byte[] data) {
-        this.featured=featured;
-        this.data=data;
+    public Image(String name,byte[] image) {
+        this.name=name;
+        this.image=image;
     }
 }

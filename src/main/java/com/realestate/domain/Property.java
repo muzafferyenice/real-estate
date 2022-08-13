@@ -89,6 +89,7 @@ public class Property {
     //@JoinColumn(name = "tour_id")//iliski kurarkene bu bir container a atmalisin yani Set e
     private Set<TourRequest> tourRequests=new HashSet<>();
 
+    //ManyToMany directional iliski
 
     @OneToMany(mappedBy = "propertyId")
     private Set<Image> images=new HashSet<>();
@@ -100,7 +101,6 @@ public class Property {
     @JoinTable(name="tbl_property_propdetails",
             joinColumns =  @JoinColumn(name = "propertyDetail_id"),
             inverseJoinColumns = @JoinColumn(name="property_id"))
-
     private Set<PropertyDetail> propertyDetail=new HashSet<>();
 
     @ManyToOne
