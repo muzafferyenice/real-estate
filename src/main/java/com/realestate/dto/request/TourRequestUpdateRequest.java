@@ -8,8 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
@@ -18,10 +21,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class TourRequestUpdateRequest {
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="dd/MM/yyyy", timezone = "Turkey")
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern =
+            "MM/dd/yyyy HH:mm:ss", timezone = "Turkey")
+    @NotNull(message = "Please select the reservation date")
     private LocalDateTime tourRequestFirstTime;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="HH:mm", timezone = "Turkey")
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern =
+            "MM/dd/yyyy HH:mm:ss", timezone = "Turkey")
+    @NotNull(message = "Please select the reservation time")
     private LocalDateTime tourRequestLastTime;
 
     @DecimalMax(value = "20",message = "Adult selection '${validatedValue}' must be less than {value}")

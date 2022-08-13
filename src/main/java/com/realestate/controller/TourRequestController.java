@@ -11,6 +11,7 @@ import com.realestate.service.ITourRequestService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,14 +27,22 @@ public class TourRequestController {
     private ITourRequestService tourRequestService;
 
     @GetMapping("/getAllByStatus")
-    public ResponseEntity<List<TourRequest>> getAllTourRequestByStatus(@PathVariable TourRequestStatus tourRId){
-        List<TourRequest> list=tourRequestService.findAllTourRequestByStatus(tourRId);
+    public ResponseEntity<List<TourRequest>> getAllTourRequestByStatus(@RequestParam String status ){
+        List<TourRequest> list=tourRequestService.findAllTourRequestByStatus(status);
 
         return ResponseEntity.ok(list);
     }
+    @GetMapping("/all")
+    public ResponseEntity<List<TourRequestDTO>> getAllTourRequest(){
+
+         List<TourRequestDTO> list=tourRequestService.findAll();
+
+        return  ResponseEntity.ok(list);
+
+    }
 
     @GetMapping("/getById/{id}")
-    public ResponseEntity<TourRequestDTO> getByIdTourRequest(@PathVariable Long tourRequestId){
+    public ResponseEntity<TourRequestDTO> getByIdTourRequest(@PathVariable("id") Long tourRequestId){
         TourRequestDTO tourRequest=tourRequestService.findByIdTourRequest(tourRequestId);
 
         return ResponseEntity.ok(tourRequest);
@@ -55,12 +64,14 @@ public class TourRequestController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<RealEstateResponse> updateTourRequest(HttpServletRequest httpServletRequest,
+    @PutMapping("{id}")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<RealEstateResponse> updateTourRequest(@PathVariable("id") Long tourRequestId,
+                                                                    HttpServletRequest httpServletRequest,
                                                                 @Valid @RequestBody TourRequestUpdateRequest tourRequestUpdateRequest){
 
         Long id = (Long) httpServletRequest.getAttribute("id");
-        tourRequestService.updateTourRequest(id, tourRequestUpdateRequest);
+        tourRequestService.updateTourRequest(id,tourRequestId, tourRequestUpdateRequest);
 
         RealEstateResponse response = new RealEstateResponse();
         response.setMessage(ResponseMessage.TOURREQUEST_UPDATED_RESPONSE_MESSAGE);
@@ -69,9 +80,9 @@ public class TourRequestController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<RealEstateResponse> deleteTourRequest(HttpServletRequest httpServletRequest,
-                                                                @PathVariable Long tourRequestId){
+                                                                @PathVariable("id") Long tourRequestId){
 
         Long id = (Long) httpServletRequest.getAttribute("id");
         tourRequestService.deleteTourRequest(id, tourRequestId);

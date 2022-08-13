@@ -13,13 +13,15 @@ import java.util.Optional;
 
 public interface ITourRequestService {
 
-    List<TourRequest> findAllTourRequestByStatus(TourRequestStatus tourRequestStatus);
+    List<TourRequest> findAllTourRequestByStatus(String tourRequestStatus);
 
     TourRequestDTO findByIdTourRequest(Long tourRequestId) throws ResourceNotFoundException;
 
     void createTourRequest(TourRequestRequest tourRequestRequest,Long userId,Long propertyId);
 
-    void updateTourRequest(Long id, TourRequestUpdateRequest tourRequestUpdateRequest);
+    void updateTourRequest(Long id,Long tourRequestId, TourRequestUpdateRequest tourRequestUpdateRequest);
 
     void deleteTourRequest(Long id, Long tourRequestId);
+
+   List<TourRequestDTO>  findAll() throws ResourceNotFoundException;
 }
